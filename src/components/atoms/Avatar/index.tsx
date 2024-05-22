@@ -1,5 +1,5 @@
-import { TShape, TSize } from "../../types/constant";
-import { cn } from "../../utils/cn";
+import { TShape, TSize } from "../../../types/constants";
+import { cn } from "../../../utils/cn";
 
 const avatarSizeMap: Record<TSize, string> = {
   large: "w-20 h-20",
