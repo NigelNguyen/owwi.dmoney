@@ -1,19 +1,24 @@
 // src/Login.tsx
-import React from "react";
+import React, { useContext } from "react";
 import { ethers } from "ethers";
 import { IPlainObject } from "../../types/common";
 import { useLogin } from "../../apis/hooks/auth";
 import AuthForm from "./shared/AuthForm";
 import { TUserForm } from "./shared/schema";
+import { AuthContext } from "../../provider/authProvider";
+import { useNavigate } from "react-router-dom";
+import { paths } from "../../routes/routes";
 
 const Login: React.FC = () => {
-  const { mutate: loginWithMetamask } = useLogin();
+  const navigate = useNavigate();
   const { mutate: loginNormal } = useLogin();
-
+  const {login} = useContext(AuthContext);
+  
   const handleLogin = (data: TUserForm) => {
     loginNormal(data, {
       onSuccess: (data) => {
-        console.log({ success: data });
+        login?.(data.content);
+        navigate(paths.home)
       },
       onError: (data) => {
         console.log({ error: data.message });
@@ -22,17 +27,11 @@ const Login: React.FC = () => {
   };
 
   const sendAddressToBackend = async (address: string) => {
-    loginWithMetamask(
-      { metaMaskAddress: address },
-      {
-        onSuccess: (data) => {
-          console.log({ success: data });
-        },
-        onError: (data) => {
-          console.log({ error: data.message });
-        },
-      }
-    );
+    handleLogin({
+      email: '',
+      password: '',
+      metaMaskAddress: address
+    })
   };
 
   const connectWallet = async () => {

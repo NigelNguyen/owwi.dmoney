@@ -1,24 +1,21 @@
 import "./App.css";
-import Login from "./pages/Login";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
-import Home from "./pages/Home";
-import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
-import Register from "./pages/Register";
 
-const queryClient = new QueryClient();
+import generateRoutes from "./routes/generateRoutes";
+import { useContext } from "react";
+import { AuthContext } from "./provider/authProvider";
+
 function App() {
+  const { role } = useContext(AuthContext);
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/*" element={<PageNotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </QueryClientProvider>
+    <BrowserRouter>
+      <Routes>
+        {generateRoutes({ role })}
+        <Route path="/*" element={<PageNotFound />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

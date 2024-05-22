@@ -1,9 +1,16 @@
-import React from 'react'
+import CButton from "../../components/atoms/CButton";
+import { useNavigate } from "react-router-dom";
+import { paths } from "../../routes/routes";
 
 const PageNotFound = () => {
-  return (
-    <div>PageNotFound</div>
-  )
-}
+  const navigate = useNavigate();
 
-export default PageNotFound
+  return (
+    <div className="text-center">
+      <div className="text-3xl text-slate-50 ">404 Page Not Found</div>
+      <CButton label="<- Back to Home" onClick={() => navigate(paths.home)} />
+    </div>
+  );
+};
+
+export default PageNotFound;
