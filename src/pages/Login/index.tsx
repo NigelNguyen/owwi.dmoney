@@ -45,12 +45,6 @@ const Login: React.FC = () => {
         const provider = new ethers.BrowserProvider(window_.ethereum);
         const signer = await provider.getSigner();
         const userAccount = await signer.getAddress();
-        // const data = await provider.getBalance(userAccount);
-        // const transaction = await signer.sendTransaction({
-        //   from: userAccount,
-        //   to: "0x44ee0329BA58941D7B0A34f762de9077037d8A08",
-        //   value: BigInt(570000000000000),
-        // });
         sendAddressToBackend(userAccount);
       } catch (error) {
         console.error(

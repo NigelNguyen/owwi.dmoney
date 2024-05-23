@@ -1,17 +1,17 @@
 import { ReactNode, createContext, useReducer } from "react";
 import { IPlainObject } from "../types/common";
-import { AuthActionEnum, TAuthActionType, TAuthContext, TLogin } from "./types";
-import { persistUser, removeUser } from "../utils/persist";
+import { AuthActionEnum, TAuthActionType, TAuthContext, TLogin, TUpdateMember } from "./types";
+import { persistRole, persistUser, removeUser } from "../utils/persist";
 import { EMAIL, META_MASK_ADDRESS, ROLE } from "../constants/common";
 import { TRole } from "../types/constants";
 
-
 const defaultAuthContext: TAuthContext = {
-  role: localStorage.getItem(ROLE) as TRole || "guest",
-  email: localStorage.getItem(EMAIL) || '',
-  metaMaskAddress: localStorage.getItem(META_MASK_ADDRESS) || '',
+  role: (localStorage.getItem(ROLE) as TRole) || "guest",
+  email: localStorage.getItem(EMAIL) || "",
+  metaMaskAddress: localStorage.getItem(META_MASK_ADDRESS) || "",
   login: () => {},
   logout: () => {},
+  updateMember: () => {},
 };
 
 export const AuthContext = createContext(defaultAuthContext);
@@ -37,6 +37,12 @@ const reducerAuth = (
     return { ...defaultAuthContext };
   }
 
+  if (action.type === "UPDATE_MEMBER") {
+    const data = action.payload as TUpdateMember;
+    persistRole(data.role);
+    return { ...state, role: data.role };
+  }
+
   return { ...state };
 };
 const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -54,8 +60,15 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
+  const updateMember = (data: TUpdateMember) => {
+    dispatch({
+      type: AuthActionEnum.UPDATE_MEMBER,
+      payload: data,
+    });
+  };
+
   return (
-    <AuthContext.Provider value={{ ...values, login, logout }}>
+    <AuthContext.Provider value={{ ...values, login, logout, updateMember }}>
       {children}
     </AuthContext.Provider>
   );

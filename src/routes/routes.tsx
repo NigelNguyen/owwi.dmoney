@@ -38,7 +38,7 @@ export const routes:TRoutes = [
   {
     path: paths.dashboard,
     element: <DashBoard/>,
-    roles: ['member']
+    roles: ['user', 'member']
   },
   {
     path: paths.records,

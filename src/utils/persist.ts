@@ -9,6 +9,10 @@ export const persistUser = (data: TLogin) => {
   cookie.set(SESSION_ID, data.sessionToken);
 };
 
+export const persistRole = (role: string)=>{
+    localStorage.setItem(ROLE, role || "");
+}
+
 export const removeUser = () => {
   localStorage.removeItem(EMAIL);
   localStorage.removeItem(META_MASK_ADDRESS);
