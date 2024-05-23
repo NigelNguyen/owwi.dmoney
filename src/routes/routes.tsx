@@ -1,6 +1,7 @@
 import DashBoard from "../pages/Dashboard";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
+import Records from "../pages/Records";
 import Register from "../pages/Register";
 import { TRole } from "../types/constants";
 
@@ -42,7 +43,7 @@ export const routes:TRoutes = [
   },
   {
     path: paths.records,
-    element: <DashBoard/>,
+    element: <Records/>,
     roles: ['member','user']
   }
 ];
