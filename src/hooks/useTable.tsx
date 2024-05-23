@@ -33,7 +33,7 @@ export type TableResult<TData> = {
   data: TData[];
   onRowClick: ((data: TData, index: number) => void) | undefined;
   setData: React.Dispatch<React.SetStateAction<TData[]>>;
-  setSort: React.Dispatch<React.SetStateAction<TSortState>>
+  setSort: React.Dispatch<React.SetStateAction<TSortState>>;
 };
 
 const useTable = <TData,>({
@@ -46,6 +46,7 @@ const useTable = <TData,>({
   onRowClick?: (data: TData, index: number) => void;
 }) => {
   const [data, setData] = useState(initData);
+  
   const [sort, setSort] = useState<TSortState>({
     field: "",
     order: "none",

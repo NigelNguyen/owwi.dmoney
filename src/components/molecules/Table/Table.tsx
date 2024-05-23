@@ -16,8 +16,8 @@ const Table = <TData,>({
   const { columnsConfig, data, onRowClick } = tableConfig;
 
   return (
-    <div className="p-3 bg-white text-slate-950 rounded-md w-fit">
-      <table className="border-collapse">
+    <div className="p-3 bg-white text-slate-950 rounded-md w-full">
+      <table className="border-collapse w-full">
         <thead className="border-b-2 text-slate-500">
           <tr key="table-header" className="mb-8">
             {columnsConfig.map((column) => (

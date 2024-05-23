@@ -1,38 +1,59 @@
+import { useEffect } from "react";
+import { BaseRecordDTO, useGetRecords } from "../../apis/hooks/record";
 import Table from "../../components/molecules/Table/Table";
 import useTable from "../../hooks/useTable";
+import CreateRecord from "./components/CreateRecord";
 
 const Records = () => {
-  const tableConfig = useTable({
+  const { data: records } = useGetRecords();
+  console.log({ records });
+  const tableConfig = useTable<BaseRecordDTO>({
     columnsConfig: [
       {
-        field: "name",
-        label: "Name",
-        align: "right",
+        field: "type",
+        label: "Type",
         type: "normal",
       },
       {
-        field: "address",
-        label: "Address",
-        type: "custom",
-        customCellRender(data) {
-          return (
-            <span className="px-2 bg-slate-700 text-white">{data.address}</span>
-          );
-        },
+        field: "category",
+        label: "Category",
+        type: "normal",
       },
-    ],
-    initData: [
-      { name: "Nguyen Van C", address: "51 Ton Duc Thang" },
-      { name: "Nguyen Van B", address: "52 Ton Duc Thang" },
-      { name: "Nguyen Van A" },
+      {
+        field: "amount",
+        label: "Amount",
+        type: "custom",
+        customCellRender: (data)=>{
+          return data.amount.toLocaleString();
+        }
+      },
+      {
+        field: "partner",
+        label: "Partner",
+        type: "normal",
+      },
+      {
+        field: "description",
+        label: "Description",
+        type: "normal",
+      },
     ],
     onRowClick: (data) => {
       console.log({ data });
     },
   });
 
+  useEffect(() => {
+    if (records?.content.records?.length) {
+      tableConfig.setData(records?.content.records);
+    }
+  }, [records]);
+
+  console.log({ tableConfig: tableConfig.data });
+
   return (
     <div>
+      <CreateRecord />
       <Table tableConfig={tableConfig} />
     </div>
   );

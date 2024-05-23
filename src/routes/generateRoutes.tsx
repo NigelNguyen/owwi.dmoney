@@ -1,3 +1,5 @@
+import HomeLayout from "../components/layouts/HomeLayout";
+import MainLayout from "../components/layouts/MainLayout";
 import { TRole } from "../types/constants";
 import { routes } from "./routes";
 import { Route } from "react-router-dom";
@@ -6,7 +8,19 @@ const generateRoutes = ({ role }: { role: TRole }) => {
   return routes
     .filter((route) => route.roles.includes(role))
     .map((route) => {
-      return <Route path={route.path} element={route.element} key={route.path}/>;
+      return (
+        <Route
+          path={route.path}
+          element={
+            route.useHomeLayout ? (
+              <HomeLayout> {route.element}</HomeLayout>
+            ) : (
+              <MainLayout>{route.element}</MainLayout>
+            )
+          }
+          key={route.path}
+        />
+      );
     });
 };
 
