@@ -16,6 +16,7 @@ export const persistRole = (role: string)=>{
 export const removeUser = () => {
   localStorage.removeItem(EMAIL);
   localStorage.removeItem(META_MASK_ADDRESS);
-  localStorage.removeItem(ROLE);
+  localStorage.setItem(ROLE, 'guest');
   cookie.remove(SESSION_ID);
+  cookie.remove('connect.sid');
 };

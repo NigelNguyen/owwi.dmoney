@@ -1,6 +1,8 @@
+import Categories from "../pages/Categories";
 import DashBoard from "../pages/Dashboard";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
+import Partners from "../pages/Partners";
 import Records from "../pages/Records";
 import Register from "../pages/Register";
 import { TRole } from "../types/constants";
@@ -19,6 +21,8 @@ export const paths = {
   register: "/register",
   dashboard: "/dashboard",
   records: "/records",
+  categories: "/categories",
+  partners: "/partners",
 };
 
 export const routes: TRoutes = [
@@ -32,6 +36,7 @@ export const routes: TRoutes = [
     path: paths.login,
     element: <Login />,
     roles: ["guest"],
+    useHomeLayout: true,
   },
   {
     path: paths.register,
@@ -41,11 +46,21 @@ export const routes: TRoutes = [
   {
     path: paths.dashboard,
     element: <DashBoard />,
-    roles: ["user", "member"],
+    roles: ["member", "user"],
   },
   {
     path: paths.records,
     element: <Records />,
+    roles: ["member", "user"],
+  },
+  {
+    path: paths.categories,
+    element: <Categories />,
+    roles: ["member", "user"],
+  },
+  {
+    path: paths.partners,
+    element: <Partners />,
     roles: ["member", "user"],
   },
 ];

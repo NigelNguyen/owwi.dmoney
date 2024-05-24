@@ -35,3 +35,11 @@ export const useLogin = () => {
     },
   });
 };
+
+export const useLogout = () => {
+  return useMutation<unknown, AxiosError, unknown>({
+    mutationFn: () => {
+      return createAxios.post("/logout");
+    },
+  });
+};

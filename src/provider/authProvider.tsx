@@ -1,6 +1,12 @@
 import { ReactNode, createContext, useReducer } from "react";
 import { IPlainObject } from "../types/common";
-import { AuthActionEnum, TAuthActionType, TAuthContext, TLogin, TUpdateMember } from "./types";
+import {
+  AuthActionEnum,
+  TAuthActionType,
+  TAuthContext,
+  TLogin,
+  TUpdateMember,
+} from "./types";
 import { persistRole, persistUser, removeUser } from "../utils/persist";
 import { EMAIL, META_MASK_ADDRESS, ROLE } from "../constants/common";
 import { TRole } from "../types/constants";
@@ -34,7 +40,7 @@ const reducerAuth = (
 
   if (action.type === "LOGOUT") {
     removeUser();
-    return { ...defaultAuthContext };
+    return { role: "member", email: "", metaMaskAddress: "" } as TAuthContext;
   }
 
   if (action.type === "UPDATE_MEMBER") {

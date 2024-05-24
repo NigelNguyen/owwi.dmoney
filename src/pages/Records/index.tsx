@@ -5,8 +5,8 @@ import useTable from "../../hooks/useTable";
 import CreateRecord from "./components/CreateRecord";
 
 const Records = () => {
-  const { data: records } = useGetRecords();
-  console.log({ records });
+  const { data: records, isFetching } = useGetRecords();
+
   const tableConfig = useTable<BaseRecordDTO>({
     columnsConfig: [
       {
@@ -23,9 +23,9 @@ const Records = () => {
         field: "amount",
         label: "Amount",
         type: "custom",
-        customCellRender: (data)=>{
+        customCellRender: (data) => {
           return data.amount.toLocaleString();
-        }
+        },
       },
       {
         field: "partner",
@@ -49,12 +49,10 @@ const Records = () => {
     }
   }, [records]);
 
-  console.log({ tableConfig: tableConfig.data });
-
   return (
     <div>
       <CreateRecord />
-      <Table tableConfig={tableConfig} />
+      <Table tableConfig={tableConfig} isLoading={isFetching} />
     </div>
   );
 };

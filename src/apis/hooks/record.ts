@@ -14,6 +14,9 @@ export type BaseRecordDTO = {
   partner: string;
   type: string;
   description: string;
+  partnerName?: string;
+  categoryName?: string;
+  typeName?: string;
 };
 
 export type CreateRecordDTO = BaseRecordDTO;

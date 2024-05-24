@@ -18,7 +18,7 @@ const Login: React.FC = () => {
     loginNormal(data, {
       onSuccess: (data) => {
         login?.(data.content);
-        navigate(paths.home)
+        navigate(paths.records)
       },
       onError: (data) => {
         console.log({ error: data.message });

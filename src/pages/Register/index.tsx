@@ -3,13 +3,18 @@ import { useRegister } from "../../apis/hooks/auth";
 import { IPlainObject } from "../../types/common";
 import AuthForm from "../Login/shared/AuthForm";
 import { TUserForm } from "../Login/shared/schema";
+import { useNavigate } from "react-router-dom";
+import { paths } from "../../routes/routes";
 
 const Register = () => {
   const { mutate: register } = useRegister();
+  const navigate = useNavigate();
+
   const registerHandler = (data: TUserForm) => {
     register(data, {
       onSuccess: (data) => {
         console.log({ success: data });
+        navigate(paths.login);
       },
       onError: (data) => {
         console.log({ error: data.message });

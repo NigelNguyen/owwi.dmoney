@@ -35,7 +35,19 @@ const CreateRecord = () => {
 
   const submitHandler = handleSubmit((data) => {
     createRecord(
-      { ...data, amount: Number(data.amount) },
+      {
+        ...data,
+        amount: Number(data.amount),
+        partnerName: partners?.content?.partners.find(
+          (item) => item.id === data.partner
+        )?.name,
+        categoryName: categories?.content?.categories.find(
+          (item) => item.id === data.category
+        )?.name,
+        typeName: types?.content?.types.find(
+          (item) => item.id === data.type
+        )?.name,
+      },
       {
         onSuccess: () => {
           console.log("Create record success");

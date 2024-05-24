@@ -10,8 +10,10 @@ const tableAlignMap: Record<TAlign, string> = {
 
 const Table = <TData,>({
   tableConfig,
+  isLoading = false,
 }: {
   tableConfig: TableResult<TData>;
+  isLoading?: boolean;
 }) => {
   const { columnsConfig, data, onRowClick } = tableConfig;
 
@@ -31,34 +33,46 @@ const Table = <TData,>({
           </tr>
         </thead>
         <tbody className="text-slate-800">
-          {data.map((row, rowIdx) => {
-            return (
-              <tr
-                onClick={() => onRowClick?.(row, rowIdx)}
-                key={`table-row-${rowIdx}`}
-              >
-                {columnsConfig.map((column) => {
-                  const isCustom = column.type === "custom";
-                  const { field, align } = column;
+          {isLoading && (
+            <tr className="w-full text-center">
+              <td colSpan={columnsConfig.length}>Loading...</td>
+            </tr>
+          )}
+          {!isLoading && data.length === 0 && (
+            <tr className="w-full text-center">
+              <td colSpan={columnsConfig.length}>No data found.</td>
+            </tr>
+          )}
+          {!isLoading &&
+            data.length > 0 &&
+            data.map((row, rowIdx) => {
+              return (
+                <tr
+                  onClick={() => onRowClick?.(row, rowIdx)}
+                  key={`table-row-${rowIdx}`}
+                >
+                  {columnsConfig.map((column) => {
+                    const isCustom = column.type === "custom";
+                    const { field, align } = column;
 
-                  const customCellRender = isCustom
-                    ? column.customCellRender
-                    : undefined;
+                    const customCellRender = isCustom
+                      ? column.customCellRender
+                      : undefined;
 
-                  return (
-                    <td
-                      className={cn("p-2", tableAlignMap[align || "left"])}
-                      key={`row-table-${String(field)}-${rowIdx}`}
-                    >
-                      {customCellRender && isCustom
-                        ? customCellRender?.(row, rowIdx)
-                        : String(row[field as keyof TData])}
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
+                    return (
+                      <td
+                        className={cn("p-2", tableAlignMap[align || "left"])}
+                        key={`row-table-${String(field)}-${rowIdx}`}
+                      >
+                        {customCellRender && isCustom
+                          ? customCellRender?.(row, rowIdx)
+                          : String(row[field as keyof TData])}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
         </tbody>
       </table>
     </div>
