@@ -3,7 +3,7 @@ import { useRegister } from "../../apis/hooks/auth";
 import { IPlainObject } from "../../types/common";
 import AuthForm from "../Login/shared/AuthForm";
 import { TUserForm } from "../Login/shared/schema";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { paths } from "../../routes/routes";
 
 const Register = () => {
@@ -54,6 +54,14 @@ const Register = () => {
       onSubmit={registerHandler}
       onConnectWallet={connectWallet}
       formLabel={"Register"}
+      subElement={
+        <Link
+          to={paths.login}
+          className="text-blue-400 text-center w-full block underline"
+        >
+          Already have an account?
+        </Link>
+      }
     />
   );
 };

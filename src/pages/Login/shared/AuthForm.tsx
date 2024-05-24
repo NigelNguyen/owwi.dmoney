@@ -6,15 +6,20 @@ import CButton from "../../../components/atoms/CButton";
 
 import { MetaMaskIcon } from "../../../assets/icons";
 import Icon from "../../../components/atoms/Icon/icon";
+import { paths } from "../../../routes/routes";
+import { Link } from "react-router-dom";
+import { FaAngleLeft } from "react-icons/fa6";
 
 const AuthForm = ({
   onSubmit,
   onConnectWallet,
-  formLabel=""
+  formLabel = "",
+  subElement,
 }: {
   onSubmit: (data: TUserForm) => void;
   onConnectWallet: () => void;
-  formLabel?:string;
+  formLabel?: string;
+  subElement?: React.ReactNode;
 }) => {
   const { control, handleSubmit } = useForm<TUserForm>({
     defaultValues: {
@@ -26,8 +31,11 @@ const AuthForm = ({
   const submitHandler = handleSubmit(onSubmit);
 
   return (
-    <div className="p-8 w-96 bg-white rounded-lg mx-auto my-8">
+    <div className="p-8 w-96 bg-white rounded-lg absolute bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2">
       <form onSubmit={submitHandler} className="flex flex-col gap-3">
+        <Link to={paths.home} className="text-black flex gap-1 items-center">
+          <FaAngleLeft /> Home
+        </Link>
         <VerticalField label="Email">
           <Controller
             control={control}
@@ -62,6 +70,7 @@ const AuthForm = ({
           />
         </button>
       </div>
+      {subElement}
     </div>
   );
 };

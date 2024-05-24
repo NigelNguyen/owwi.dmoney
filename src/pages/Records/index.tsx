@@ -94,14 +94,16 @@ const Records = () => {
         types={types?.content.types || []}
       />
       {/* Edit Record Form */}
-      <EditRecord
-        recordId={editId}
-        isOpen={isOpenEditForm}
-        setIsOpen={setIsOpenEditForm}
-        categories={categories?.content.categories || []}
-        partners={partners?.content.partners || []}
-        types={types?.content.types || []}
-      />
+      {isOpenEditForm && (
+        <EditRecord
+          recordId={editId}
+          isOpen={isOpenEditForm}
+          setIsOpen={setIsOpenEditForm}
+          categories={categories?.content.categories || []}
+          partners={partners?.content.partners || []}
+          types={types?.content.types || []}
+        />
+      )}
       <Table tableConfig={tableConfig} isLoading={isFetching} />
     </>
   );

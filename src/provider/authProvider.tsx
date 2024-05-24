@@ -40,7 +40,7 @@ const reducerAuth = (
 
   if (action.type === "LOGOUT") {
     removeUser();
-    return { role: "member", email: "", metaMaskAddress: "" } as TAuthContext;
+    return { role: "guest", email: "", metaMaskAddress: "" } as TAuthContext;
   }
 
   if (action.type === "UPDATE_MEMBER") {

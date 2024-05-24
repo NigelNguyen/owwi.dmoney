@@ -42,6 +42,7 @@ export const routes: TRoutes = [
     path: paths.register,
     element: <Register />,
     roles: ["guest"],
+    useHomeLayout: true,
   },
   {
     path: paths.dashboard,

@@ -1,6 +1,7 @@
 import { TableResult } from "../../../hooks/useTable";
 import { TAlign } from "../../../types/constants";
 import { cn } from "../../../utils/cn";
+import Spin from "../../atoms/Spin";
 
 const tableAlignMap: Record<TAlign, string> = {
   center: "text-center",
@@ -35,12 +36,18 @@ const Table = <TData,>({
         <tbody className="text-slate-800">
           {isLoading && (
             <tr className="w-full text-center">
-              <td colSpan={columnsConfig.length} className="py-8">Loading...</td>
+              <td colSpan={columnsConfig.length} className="py-8">
+                <div className="flex w-full justify-center">
+                  <Spin />
+                </div>
+              </td>
             </tr>
           )}
           {!isLoading && data.length === 0 && (
             <tr className="w-full text-center">
-              <td colSpan={columnsConfig.length} className="py-8">No data found.</td>
+              <td colSpan={columnsConfig.length} className="py-8">
+                No data found.
+              </td>
             </tr>
           )}
           {!isLoading &&

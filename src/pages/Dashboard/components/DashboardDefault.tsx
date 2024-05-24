@@ -4,6 +4,7 @@ import { IPlainObject } from "../../../types/common";
 import { ethers } from "ethers";
 import { useCreateTransaction } from "../../../apis/hooks/transaction";
 import { AuthContext } from "../../../provider/authProvider";
+import Spin from "../../../components/atoms/Spin";
 
 const DashboardDefault = () => {
   const [disable, setDisable] = useState(false);
@@ -61,12 +62,22 @@ const DashboardDefault = () => {
     <div className="flex flex-col gap-4 text-center mt-10">
       <p>Join Owwi Member to Unlock Dashboard once and for all</p>
       <p>With only 0.00000000000000001 ETH</p>
+
       <CButton
         label="Join Now"
         className="w-36 self-center"
         onClick={joinMemberHandler}
         disabled={disable}
       />
+
+      {disable && (
+        <div className="flex gap-2 items-center text-center justify-center">
+          <Spin />
+          <span className="text-xl">
+            Please wait... It will take a minute...
+          </span>
+        </div>
+      )}
     </div>
   );
 };

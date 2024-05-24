@@ -6,19 +6,19 @@ import { useLogin } from "../../apis/hooks/auth";
 import AuthForm from "./shared/AuthForm";
 import { TUserForm } from "./shared/schema";
 import { AuthContext } from "../../provider/authProvider";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { paths } from "../../routes/routes";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const { mutate: loginNormal } = useLogin();
-  const {login} = useContext(AuthContext);
-  
+  const { login } = useContext(AuthContext);
+
   const handleLogin = (data: TUserForm) => {
     loginNormal(data, {
       onSuccess: (data) => {
         login?.(data.content);
-        navigate(paths.records)
+        navigate(paths.records);
       },
       onError: (data) => {
         console.log({ error: data.message });
@@ -28,10 +28,10 @@ const Login: React.FC = () => {
 
   const sendAddressToBackend = async (address: string) => {
     handleLogin({
-      email: '',
-      password: '',
-      metaMaskAddress: address
-    })
+      email: "",
+      password: "",
+      metaMaskAddress: address,
+    });
   };
 
   const connectWallet = async () => {
@@ -62,6 +62,7 @@ const Login: React.FC = () => {
       onSubmit={handleLogin}
       onConnectWallet={connectWallet}
       formLabel={"Login"}
+      subElement={<Link to={paths.register} className="text-blue-400 text-center w-full block underline">Do not have an account?</Link>}
     />
   );
 };
