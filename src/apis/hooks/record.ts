@@ -9,6 +9,7 @@ import createAxios from "../axios";
 
 export type BaseRecordDTO = {
   id?: string;
+  date:string;
   amount: number;
   category: string;
   partner: string;
@@ -20,11 +21,19 @@ export type BaseRecordDTO = {
 };
 
 export type CreateRecordDTO = BaseRecordDTO;
+export type UpdateRecordDTO = BaseRecordDTO & { id: string };
 
 export type GetRecordsDTO = {
   message: string;
   content: {
     records: Array<BaseRecordDTO>;
+  };
+};
+
+export type GetRecordDTO = {
+  message: string;
+  content: {
+    record: BaseRecordDTO;
   };
 };
 
@@ -45,11 +54,38 @@ export const useCreateRecord = () => {
   });
 };
 
+export const useUpdateRecord = () => {
+  const queryClient = useQueryClient();
+  return useMutation<UpdateRecordDTO, AxiosError, UpdateRecordDTO>({
+    mutationFn: (payload) => {
+      return createAxios.put("/record", payload);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [queryKey.list] });
+      queryClient.invalidateQueries({ queryKey: [queryKey.detail] });
+    },
+  });
+};
+
 export const useGetRecords = (): UseQueryResult<GetRecordsDTO, AxiosError> => {
   return useQuery({
     queryKey: [queryKey.list],
     queryFn: () => {
       return createAxios.get("/records");
     },
+  });
+};
+
+export const useGetRecordById = ({
+  id,
+}: {
+  id: string;
+}): UseQueryResult<GetRecordDTO, AxiosError> => {
+  return useQuery({
+    queryKey: [queryKey.detail, id],
+    queryFn: () => {
+      return createAxios.get(`/record/${id}`);
+    },
+    retry: false,
   });
 };

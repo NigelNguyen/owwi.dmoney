@@ -35,12 +35,12 @@ const Table = <TData,>({
         <tbody className="text-slate-800">
           {isLoading && (
             <tr className="w-full text-center">
-              <td colSpan={columnsConfig.length}>Loading...</td>
+              <td colSpan={columnsConfig.length} className="py-8">Loading...</td>
             </tr>
           )}
           {!isLoading && data.length === 0 && (
             <tr className="w-full text-center">
-              <td colSpan={columnsConfig.length}>No data found.</td>
+              <td colSpan={columnsConfig.length} className="py-8">No data found.</td>
             </tr>
           )}
           {!isLoading &&
@@ -50,6 +50,7 @@ const Table = <TData,>({
                 <tr
                   onClick={() => onRowClick?.(row, rowIdx)}
                   key={`table-row-${rowIdx}`}
+                  className="hover:bg-slate-100 border-b-[1px]"
                 >
                   {columnsConfig.map((column) => {
                     const isCustom = column.type === "custom";
