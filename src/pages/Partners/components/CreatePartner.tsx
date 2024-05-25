@@ -25,7 +25,7 @@ const CreatePartner = () => {
 
   return (
     <div className="flex justify-between mb-3">
-      <p className="text-2xl text-white">Partner List</p>
+      <p className="text-2xl text-text-title">Partner List</p>
       <CButton
         label={<IoMdAdd />}
         onClick={() => setIsOpen(true)}

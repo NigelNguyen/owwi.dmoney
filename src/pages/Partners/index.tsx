@@ -43,6 +43,10 @@ const Partners = () => {
         },
       },
     ],
+    onRowDoubleClick: (data) => {
+      setEditId(data.id || "");
+      setIsOpenEditForm(true);
+    },
   });
 
   useEffect(() => {

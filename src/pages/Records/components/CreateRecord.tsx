@@ -43,7 +43,7 @@ const CreateRecord = ({
   return (
     <>
       <div className="flex justify-between mb-3">
-        <p className="text-2xl text-white">Record List</p>
+        <p className="text-2xl text-text-title">Record List</p>
         <CButton
           label={<IoMdAdd />}
           onClick={() => setIsOpen(true)}

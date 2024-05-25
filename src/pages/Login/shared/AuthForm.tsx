@@ -31,7 +31,7 @@ const AuthForm = ({
   const submitHandler = handleSubmit(onSubmit);
 
   return (
-    <div className="p-8 w-96 bg-white rounded-lg absolute bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2">
+    <div className="p-8 w-96 bg-white rounded-lg absolute bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2 shadow-lg">
       <form onSubmit={submitHandler} className="flex flex-col gap-3">
         <Link to={paths.home} className="text-black flex gap-1 items-center">
           <FaAngleLeft /> Home

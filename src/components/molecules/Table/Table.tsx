@@ -16,12 +16,12 @@ const Table = <TData,>({
   tableConfig: TableResult<TData>;
   isLoading?: boolean;
 }) => {
-  const { columnsConfig, data, onRowClick } = tableConfig;
+  const { columnsConfig, data, onRowClick, onRowDoubleClick } = tableConfig;
 
   return (
-    <div className="p-3 bg-white text-slate-950 rounded-md w-full">
+    <div className="p-3 bg-white rounded-md w-full max-h-[70vh] overflow-y-scroll">
       <table className="border-collapse w-full">
-        <thead className="border-b-2 text-slate-500">
+        <thead className="border-b-2 text-text-header">
           <tr key="table-header" className="mb-8">
             {columnsConfig.map((column) => (
               <th
@@ -33,7 +33,7 @@ const Table = <TData,>({
             ))}
           </tr>
         </thead>
-        <tbody className="text-slate-800">
+        <tbody className="text-text-cell">
           {isLoading && (
             <tr className="w-full text-center">
               <td colSpan={columnsConfig.length} className="py-8">
@@ -56,8 +56,12 @@ const Table = <TData,>({
               return (
                 <tr
                   onClick={() => onRowClick?.(row, rowIdx)}
+                  onDoubleClick={() => onRowDoubleClick?.(row, rowIdx)}
                   key={`table-row-${rowIdx}`}
-                  className="hover:bg-slate-100 border-b-[1px]"
+                  className={cn(
+                    "hover:bg-purple-50 border-b-[1px]",
+                    onRowClick || onRowDoubleClick ? "hover:cursor-pointer" : ""
+                  )}
                 >
                   {columnsConfig.map((column) => {
                     const isCustom = column.type === "custom";

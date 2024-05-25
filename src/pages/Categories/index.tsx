@@ -44,6 +44,10 @@ const Categories = () => {
         },
       },
     ],
+    onRowDoubleClick: (data) => {
+      setEditId(data.id || "");
+      setIsOpenEditForm(true);
+    },
   });
 
   useEffect(() => {

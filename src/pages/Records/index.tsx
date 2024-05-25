@@ -75,8 +75,9 @@ const Records = () => {
         },
       },
     ],
-    onRowClick: (data) => {
-      console.log({ data });
+    onRowDoubleClick: (data) => {
+      setEditId(data.id || "");
+      setIsOpenEditForm(true);
     },
   });
 

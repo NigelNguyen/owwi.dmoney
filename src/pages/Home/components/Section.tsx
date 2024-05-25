@@ -5,8 +5,8 @@ import ContentWrapper from "../../../components/atoms/ContentWrapper";
 export type TTheme = "dark" | "light";
 
 const themeMap: Record<TTheme, string> = {
-  dark: "text-white bg-slate-800",
-  light: "text-slate-800 bg-white",
+  dark: "bg-purple-01",
+  light: "bg-white",
 };
 const Section = ({
   children,
@@ -16,7 +16,7 @@ const Section = ({
   theme?: TTheme;
 }) => {
   return (
-    <div className={cn(themeMap[theme], "py-16 text-center")}>
+    <div className={cn(themeMap[theme], "py-16 text-center text-text-title")}>
       <ContentWrapper>{children}</ContentWrapper>
     </div>
   );

@@ -67,7 +67,7 @@ const Header = () => {
               <NavLink
                 to={item.path}
                 className={({ isActive, isPending }) =>
-                  isPending ? "pending" : isActive ? "font-semibold" : ""
+                  `hover:text-purple-400 ${isPending ? "pending" : isActive ? "font-semibold" : ""}`
                 }
                 key={item.path}
               >

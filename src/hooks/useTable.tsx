@@ -32,6 +32,7 @@ export type TableResult<TData> = {
   columnsConfig: TColumnConfig<TData>[];
   data: TData[];
   onRowClick: ((data: TData, index: number) => void) | undefined;
+  onRowDoubleClick: ((data: TData, index: number) => void) | undefined;
   setData: React.Dispatch<React.SetStateAction<TData[]>>;
   setSort: React.Dispatch<React.SetStateAction<TSortState>>;
 };
@@ -40,10 +41,12 @@ const useTable = <TData,>({
   columnsConfig,
   initData = [],
   onRowClick,
+  onRowDoubleClick
 }: {
   columnsConfig: TColumnConfig<TData>[];
   initData?: TData[];
   onRowClick?: (data: TData, index: number) => void;
+  onRowDoubleClick?: (data: TData, index: number) => void;
 }) => {
   const [data, setData] = useState(initData);
   
@@ -72,6 +75,7 @@ const useTable = <TData,>({
     columnsConfig,
     data: displayData,
     onRowClick,
+    onRowDoubleClick,
     setData,
     setSort,
   };

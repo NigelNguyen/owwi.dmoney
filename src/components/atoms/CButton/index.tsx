@@ -5,7 +5,8 @@ export type TButtonVariant = "outlined" | "contained";
 
 export const buttonVariantMap: Record<TButtonVariant, string> = {
   contained: "border-none bg-slate-950 text-slate-50 hover:bg-slate-600",
-  outlined: "border-2 border-slate-800 bg-white text-slate-950 hover:bg-slate-100",
+  outlined:
+    "border-[1px] border-slate-800 bg-white text-slate-950 hover:bg-slate-950 hover:text-slate-50",
 };
 
 export interface ICButtonProps
