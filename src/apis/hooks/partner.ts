@@ -10,10 +10,19 @@ export type PartnerBaseDTO = {
 
 export type CreatePartnerDTO = PartnerBaseDTO;
 
+export type UpdatePartnerDTO = PartnerBaseDTO & {id: string};
+
 export type GetPartnersDTO = {
   message: string;
   content: {
     partners: Array<PartnerBaseDTO>;
+  };
+};
+
+export type GetPartnerDTO = {
+  message: string;
+  content: {
+    partner: PartnerBaseDTO;
   };
 };
 
@@ -43,5 +52,33 @@ export const useGetPartners= (): UseQueryResult<
     queryFn: () => {
       return createAxios.get("/partners");
     },
+  });
+};
+
+export const useUpdatePartner = () => {
+  const queryClient = useQueryClient();
+  return useMutation<UpdatePartnerDTO, AxiosError, UpdatePartnerDTO>({
+    mutationFn: (payload) => {
+      return createAxios.put("/partner", payload);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [queryKey.list] });
+      queryClient.invalidateQueries({ queryKey: [queryKey.detail] });
+    },
+  });
+};
+
+
+export const useGetPartnerById = ({
+  id,
+}: {
+  id: string;
+}): UseQueryResult<GetPartnerDTO, AxiosError> => {
+  return useQuery({
+    queryKey: [queryKey.detail, id],
+    queryFn: () => {
+      return createAxios.get(`/partner/${id}`);
+    },
+    retry: false,
   });
 };

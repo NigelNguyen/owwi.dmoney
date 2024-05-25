@@ -2,31 +2,41 @@ import { Controller, useForm } from "react-hook-form";
 import VerticalField from "../../../components/atoms/VerticalField";
 import CInput from "../../../components/atoms/Input";
 import CButton from "../../../components/atoms/CButton";
-import { useCreatePartner } from "../../../apis/hooks/partner";
+import { TPartnerForm } from "../types";
+import { useEffect } from "react";
 
-const PartnerForm = () => {
-  const { control, handleSubmit, reset } = useForm({
+const PartnerForm = ({
+  submitHandler,
+  initValues,
+  isPending,
+  submitLabel,
+}: {
+  submitHandler: (data: TPartnerForm) => void;
+  initValues: TPartnerForm;
+  isPending?: boolean;
+  submitLabel: string;
+}) => {
+  const { control, handleSubmit, reset } = useForm<TPartnerForm>({
     defaultValues: {
-      name: "",
       description: "",
+      name: ""
     },
   });
-  const { mutate: createPartner, isPending } = useCreatePartner();
 
-  const submitHandler = handleSubmit((data) => {
-    createPartner(
-      { ...data },
-      {
-        onSuccess: () => {
-          console.log("Create record success");
-          reset()
-        },
-      }
-    );
-  });
+  useEffect(() => {
+    if (initValues) {
+      reset(initValues);
+    }
+  }, [initValues]);
 
   return (
-    <form onReset={() => reset()} onSubmit={submitHandler}>
+    <form
+      onReset={() => reset()}
+      onSubmit={handleSubmit((data) => {
+        reset();
+        submitHandler(data);
+      })}
+    >
       <div className="flex flex-col gap-4">
         <VerticalField label="Partner Name">
           <Controller
@@ -49,7 +59,7 @@ const PartnerForm = () => {
       </div>
       <div className="flex gap-4">
         <CButton
-          label="Create"
+          label={submitLabel}
           className="mt-6"
           type="submit"
           disabled={isPending}

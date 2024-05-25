@@ -15,10 +15,19 @@ export type CategoryBaseDTO = {
 
 export type CreateCategoryDTO = CategoryBaseDTO;
 
+export type UpdateCategoryDTO = CategoryBaseDTO & { id: string };
+
 export type GetCategoriesDTO = {
   message: string;
   content: {
     categories: Array<CategoryBaseDTO>;
+  };
+};
+
+export type GetCategoryDTO = {
+  message: string;
+  content: {
+    category: CategoryBaseDTO;
   };
 };
 
@@ -39,6 +48,19 @@ export const useCreateCategory = () => {
   });
 };
 
+export const useUpdateCategory = () => {
+  const queryClient = useQueryClient();
+  return useMutation<UpdateCategoryDTO, AxiosError, UpdateCategoryDTO>({
+    mutationFn: (payload) => {
+      return createAxios.put("/category", payload);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [queryKey.list] });
+      queryClient.invalidateQueries({ queryKey: [queryKey.detail] });
+    },
+  });
+};
+
 export const useGetCategories = (): UseQueryResult<
   GetCategoriesDTO,
   AxiosError
@@ -47,6 +69,19 @@ export const useGetCategories = (): UseQueryResult<
     queryKey: [queryKey.list],
     queryFn: () => {
       return createAxios.get("/categories");
+    },
+  });
+};
+
+export const useGetCategoryById = ({
+  id,
+}: {
+  id: string;
+}): UseQueryResult<GetCategoryDTO, AxiosError> => {
+  return useQuery({
+    queryKey: [queryKey.detail],
+    queryFn: () => {
+      return createAxios.get(`/category/${id}`);
     },
   });
 };

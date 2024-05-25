@@ -2,31 +2,38 @@ import { Controller, useForm } from "react-hook-form";
 import VerticalField from "../../../components/atoms/VerticalField";
 import CInput from "../../../components/atoms/Input";
 import CButton from "../../../components/atoms/CButton";
-import { useCreateCategory } from "../../../apis/hooks/category";
+import { TCategoryForm } from "../types";
+import { useEffect } from "react";
 
-const CategoryForm = () => {
+const CategoryForm = ({
+  submitHandler,
+  initValues,
+  isPending,
+  submitLabel,
+}: {
+  submitHandler: (data: TCategoryForm) => void;
+  initValues: TCategoryForm;
+  isPending?: boolean;
+  submitLabel: string;
+}) => {
   const { control, handleSubmit, reset } = useForm({
-    defaultValues: {
-      name: "",
-      description: "",
-    },
+    defaultValues: initValues,
   });
-  const { mutate: createCategory, isPending } = useCreateCategory();
 
-  const submitHandler = handleSubmit((data) => {
-    createCategory(
-      { ...data },
-      {
-        onSuccess: () => {
-          console.log("Create record success");
-          reset()
-        },
-      }
-    );
-  });
+  useEffect(() => {
+    if (initValues) {
+      reset(initValues);
+    }
+  }, [initValues]);
 
   return (
-    <form onReset={() => reset()} onSubmit={submitHandler}>
+    <form
+      onReset={() => reset()}
+      onSubmit={handleSubmit((data) => {
+        submitHandler(data);
+        reset();
+      })}
+    >
       <div className="flex flex-col gap-4">
         <VerticalField label="Category Name">
           <Controller
@@ -49,7 +56,7 @@ const CategoryForm = () => {
       </div>
       <div className="flex gap-4">
         <CButton
-          label="Create"
+          label={submitLabel}
           className="mt-6"
           type="submit"
           disabled={isPending}

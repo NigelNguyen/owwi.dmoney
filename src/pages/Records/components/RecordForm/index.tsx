@@ -11,9 +11,17 @@ import CategoryForm from "../../../Categories/components/CategoryForm";
 import PartnerForm from "../../../Partners/components/PartnerForm";
 import Modal from "../../../../components/molecules/Modal";
 import { IOptions } from "../../../../types/common";
-import { PartnerBaseDTO } from "../../../../apis/hooks/partner";
-import { CategoryBaseDTO } from "../../../../apis/hooks/category";
+import {
+  PartnerBaseDTO,
+  useCreatePartner,
+} from "../../../../apis/hooks/partner";
+import {
+  CategoryBaseDTO,
+  useCreateCategory,
+} from "../../../../apis/hooks/category";
 import { TypeBaseDTO } from "../../../../apis/hooks/type";
+import { TPartnerForm } from "../../../Partners/types";
+import { TCategoryForm } from "../../../Categories/types";
 
 const RecordForm = ({
   submitHandler,
@@ -24,7 +32,7 @@ const RecordForm = ({
   categories,
   types,
   initData,
-  submitLabel
+  submitLabel,
 }: {
   submitHandler: (data: TRecordForm) => void;
   isPending?: boolean;
@@ -34,7 +42,7 @@ const RecordForm = ({
   categories: CategoryBaseDTO[];
   types: TypeBaseDTO[];
   initData?: TRecordForm;
-  submitLabel:string;
+  submitLabel: string;
 }) => {
   const [isOpenCategoryForm, setIsOpenCategoryForm] = useState(false);
   const [isOpenPartnerForm, setIsOpenPartnerForm] = useState(false);
@@ -46,6 +54,33 @@ const RecordForm = ({
     submitHandler(data);
   });
 
+  const { mutate: createPartner, isPending: isPendingCreatePartner } =
+    useCreatePartner();
+  const createPartnerHandler = (data: TPartnerForm) => {
+    createPartner(
+      { ...data },
+      {
+        onSuccess: () => {
+          console.log("Create partner success");
+        },
+      }
+    );
+  };
+
+  const { mutate: createCategory, isPending: isPendingCreateCategory } =
+    useCreateCategory();
+
+  const createCategoryHandler = (data: TCategoryForm) => {
+    createCategory(
+      { ...data },
+      {
+        onSuccess: () => {
+          console.log("Create category success");
+        },
+      }
+    );
+  };
+
   const otherForms = (
     <div className="flex flex-col gap-4">
       {isOpenCategoryForm && (
@@ -53,7 +88,12 @@ const RecordForm = ({
           className="min-w-72"
           onClickCloseButton={() => setIsOpenCategoryForm(false)}
         >
-          <CategoryForm />
+          <CategoryForm
+            submitLabel="Create"
+            isPending={isPendingCreateCategory}
+            initValues={{ description: "", name: "" }}
+            submitHandler={createCategoryHandler}
+          />
         </Overlay>
       )}
       {isOpenPartnerForm && (
@@ -61,7 +101,12 @@ const RecordForm = ({
           className="min-w-72"
           onClickCloseButton={() => setIsOpenPartnerForm(false)}
         >
-          <PartnerForm />
+          <PartnerForm
+            initValues={{ description: "", name: "" }}
+            submitHandler={createPartnerHandler}
+            isPending={isPendingCreatePartner}
+            submitLabel="Create"
+          />
         </Overlay>
       )}
     </div>
@@ -196,7 +241,13 @@ const RecordForm = ({
               control={control}
               name="date"
               render={({ field: { value, onChange } }) => {
-                return <CInput value={value.toString()} onChange={onChange} type="date"/>;
+                return (
+                  <CInput
+                    value={value.toString()}
+                    onChange={onChange}
+                    type="date"
+                  />
+                );
               }}
             />
           </VerticalField>
