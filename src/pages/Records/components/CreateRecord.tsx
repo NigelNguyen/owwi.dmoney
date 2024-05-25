@@ -7,6 +7,7 @@ import RecordForm from "./RecordForm";
 import { CategoryBaseDTO } from "../../../apis/hooks/category";
 import { PartnerBaseDTO } from "../../../apis/hooks/partner";
 import { TypeBaseDTO } from "../../../apis/hooks/type";
+import toast from "react-hot-toast";
 
 const CreateRecord = ({
   partners,
@@ -32,7 +33,7 @@ const CreateRecord = ({
       },
       {
         onSuccess: () => {
-          console.log("Create record success");
+          toast.success("Create record success");
           setIsOpen(false);
         },
       }

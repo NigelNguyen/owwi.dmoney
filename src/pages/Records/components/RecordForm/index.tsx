@@ -22,6 +22,7 @@ import {
 import { TypeBaseDTO } from "../../../../apis/hooks/type";
 import { TPartnerForm } from "../../../Partners/types";
 import { TCategoryForm } from "../../../Categories/types";
+import toast from "react-hot-toast";
 
 const RecordForm = ({
   submitHandler,
@@ -61,7 +62,7 @@ const RecordForm = ({
       { ...data },
       {
         onSuccess: () => {
-          console.log("Create partner success");
+          toast.success("Create partner success");
         },
       }
     );
@@ -75,7 +76,7 @@ const RecordForm = ({
       { ...data },
       {
         onSuccess: () => {
-          console.log("Create category success");
+          toast.success("Create category success");
         },
       }
     );

@@ -5,6 +5,7 @@ import CategoryForm from "./CategoryForm";
 import { TCategoryForm } from "../types";
 import { useCreateCategory } from "../../../apis/hooks/category";
 import Modal from "../../../components/molecules/Modal";
+import toast from "react-hot-toast";
 
 const CreateCategory = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,7 +16,7 @@ const CreateCategory = () => {
       { ...data },
       {
         onSuccess: () => {
-          console.log("Create category success");
+          toast.success("Create category success");
           setIsOpen(false)
         },
       }

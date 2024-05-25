@@ -6,6 +6,7 @@ import {
   useUpdateCategory,
 } from "../../../apis/hooks/category";
 import Modal from "../../../components/molecules/Modal";
+import toast from "react-hot-toast";
 
 const EditCategory = ({
   categoryId,
@@ -26,7 +27,7 @@ const EditCategory = ({
       },
       {
         onSuccess: () => {
-          console.log("Update category success");
+          toast.success("Update category success");
           setIsOpen(false);
         },
       }

@@ -8,6 +8,7 @@ import { TUserForm } from "./shared/schema";
 import { AuthContext } from "../../provider/authProvider";
 import { Link, useNavigate } from "react-router-dom";
 import { paths } from "../../routes/routes";
+import toast from "react-hot-toast";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -17,11 +18,12 @@ const Login: React.FC = () => {
   const handleLogin = (data: TUserForm) => {
     loginNormal(data, {
       onSuccess: (data) => {
+        toast.success("Login successfully!")
         login?.(data.content);
         navigate(paths.records);
       },
       onError: (data) => {
-        console.log({ error: data.message });
+        toast.error(data.message);
       },
     });
   };
@@ -47,13 +49,10 @@ const Login: React.FC = () => {
         const userAccount = await signer.getAddress();
         sendAddressToBackend(userAccount);
       } catch (error) {
-        console.error(
-          "User denied account access or there was an error",
-          error
-        );
+        toast.error("User denied account access or there was an error");
       }
     } else {
-      console.error("No Ethereum provider found. Install MetaMask.");
+      toast.error("No Ethereum provider found. Please install MetaMask first");
     }
   };
 
@@ -62,7 +61,14 @@ const Login: React.FC = () => {
       onSubmit={handleLogin}
       onConnectWallet={connectWallet}
       formLabel={"Login"}
-      subElement={<Link to={paths.register} className="text-blue-400 text-center w-full block underline">Do not have an account?</Link>}
+      subElement={
+        <Link
+          to={paths.register}
+          className="text-blue-400 text-center w-full block underline"
+        >
+          Do not have an account?
+        </Link>
+      }
     />
   );
 };

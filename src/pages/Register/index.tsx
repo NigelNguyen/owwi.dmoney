@@ -5,6 +5,7 @@ import AuthForm from "../Login/shared/AuthForm";
 import { TUserForm } from "../Login/shared/schema";
 import { Link, useNavigate } from "react-router-dom";
 import { paths } from "../../routes/routes";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const { mutate: register } = useRegister();
@@ -12,12 +13,12 @@ const Register = () => {
 
   const registerHandler = (data: TUserForm) => {
     register(data, {
-      onSuccess: (data) => {
-        console.log({ success: data });
+      onSuccess: () => {
+        toast.success("Register Successfully!");
         navigate(paths.login);
       },
       onError: (data) => {
-        console.log({ error: data.message });
+        toast.success(data.message);
       },
     });
   };
@@ -39,13 +40,10 @@ const Register = () => {
           password: "",
         });
       } catch (error) {
-        console.error(
-          "User denied account access or there was an error",
-          error
-        );
+        toast.error("User denied account access or there was an error");
       }
     } else {
-      console.error("No Ethereum provider found. Install MetaMask.");
+      toast.error("No Ethereum provider found. Please install MetaMask first.");
     }
   };
 

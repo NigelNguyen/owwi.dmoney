@@ -34,7 +34,7 @@ const Home = () => {
         <img src={DemoList} className="rounded-lg" />
       </Section>
       <Section>
-        <p className="text-4xl mb-8">Connect with your Meta Mask</p>
+        <p className="text-4xl mb-8">Connect with your MetaMask</p>
         <div className="flex justify-center">
           <img src={DemoLogin} className="rounded-lg max-w-96" />
         </div>

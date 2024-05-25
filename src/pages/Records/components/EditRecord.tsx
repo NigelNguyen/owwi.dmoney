@@ -5,6 +5,7 @@ import { TypeBaseDTO } from "../../../apis/hooks/type";
 import RecordForm from "./RecordForm";
 import { useGetRecordById, useUpdateRecord } from "../../../apis/hooks/record";
 import { TRecordForm } from "../type";
+import toast from "react-hot-toast";
 
 const EditRecord = ({
   recordId,
@@ -36,7 +37,7 @@ const EditRecord = ({
       },
       {
         onSuccess: () => {
-          console.log("Update record success");
+          toast.success("Update record success");
           setIsOpen(false);
         },
       }

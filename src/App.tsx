@@ -5,17 +5,26 @@ import PageNotFound from "./pages/PageNotFound/PageNotFound";
 import generateRoutes from "./routes/generateRoutes";
 import { useContext } from "react";
 import { AuthContext } from "./provider/authProvider";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const { role } = useContext(AuthContext);
 
   return (
-    <BrowserRouter>
-      <Routes>
-        {generateRoutes({ role })}
-        <Route path="/*" element={<PageNotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <Routes>
+          {generateRoutes({ role })}
+          <Route path="/*" element={<PageNotFound />} />
+        </Routes>
+        <Toaster
+          toastOptions={{
+            position: "bottom-right",
+            duration: 1000
+          }}
+        />
+      </BrowserRouter>
+    </>
   );
 }
 

@@ -5,6 +5,7 @@ import PartnerForm from "./PartnerForm";
 import { TPartnerForm } from "../types";
 import { useCreatePartner } from "../../../apis/hooks/partner";
 import Modal from "../../../components/molecules/Modal";
+import toast from "react-hot-toast";
 
 const CreatePartner = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,8 +16,8 @@ const CreatePartner = () => {
       { ...data },
       {
         onSuccess: () => {
-          console.log("Create record success");
-          setIsOpen(false)
+          toast.success("Create partner success");
+          setIsOpen(false);
         },
       }
     );
@@ -30,7 +31,11 @@ const CreatePartner = () => {
         onClick={() => setIsOpen(true)}
         variant="outlined"
       />
-      <Modal onCloseModal={() => setIsOpen(false)} open={isOpen} title="Create Partner">
+      <Modal
+        onCloseModal={() => setIsOpen(false)}
+        open={isOpen}
+        title="Create Partner"
+      >
         <PartnerForm
           initValues={{ description: "", name: "" }}
           submitHandler={submitHandler}

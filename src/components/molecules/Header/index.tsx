@@ -8,6 +8,7 @@ import { IoIosLogOut } from "react-icons/io";
 import { NavLink, useNavigate } from "react-router-dom";
 import { paths } from "../../../routes/routes";
 import { useLogout } from "../../../apis/hooks/auth";
+import toast from "react-hot-toast";
 
 const Header = () => {
   const { role, logout } = useContext(AuthContext);
@@ -21,9 +22,10 @@ const Header = () => {
         onSuccess: () => {
           logout?.();
           navigate(paths.home);
+          toast.success("Logged out!");
         },
         onError: () => {
-          console.log("Failed to logout!");
+          toast.error("Failed to logout!");
         },
       }
     );

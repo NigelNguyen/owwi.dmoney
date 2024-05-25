@@ -5,6 +5,7 @@ import { ethers } from "ethers";
 import { useCreateTransaction } from "../../../apis/hooks/transaction";
 import { AuthContext } from "../../../provider/authProvider";
 import Spin from "../../../components/atoms/Spin";
+import toast from "react-hot-toast";
 
 const DashboardDefault = () => {
   const [disable, setDisable] = useState(false);
@@ -40,7 +41,7 @@ const DashboardDefault = () => {
               setDisable(false);
             },
             onError: () => {
-              console.log("Error when create transaction!");
+              toast.error("Error when create transaction!");
               setDisable(false);
             },
           }
@@ -48,13 +49,15 @@ const DashboardDefault = () => {
       } catch (error) {
         const errorCode = error as IPlainObject;
         if (errorCode.code === "ACTION_REJECTED") {
-          console.error("Cancel Transaction");
+          toast.error("Canceled Transaction");
         } else {
+          toast.error("There was an error during transaction!");
           console.error({ error });
         }
+        setDisable(false);
       }
     } else {
-      console.error("No Ethereum provider found. Install MetaMask.");
+      toast.error("No Ethereum provider found. Please install MetaMask first.");
     }
   };
 

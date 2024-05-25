@@ -6,6 +6,7 @@ import {
   useUpdatePartner,
 } from "../../../apis/hooks/partner";
 import Modal from "../../../components/molecules/Modal";
+import toast from "react-hot-toast";
 
 const EditPartner = ({
   partnerId,
@@ -26,7 +27,7 @@ const EditPartner = ({
       },
       {
         onSuccess: () => {
-          console.log("Update partner success");
+          toast.success("Update partner success");
           setIsOpen(false);
         },
       }
