@@ -4,9 +4,9 @@ import PieChartComparison from "./PieChartComparison";
 type TDisplayPieChart = { values: Array<number>; labels: Array<string> };
 
 const PieChartRender = () => {
-  const { data: outcomeData } = useGetStatisticCategoryMonthly({type: 'Outcome'});
-  const { data: incomeData } = useGetStatisticCategoryMonthly({type: 'Income'});
-  const { data: borrowData } = useGetStatisticCategoryMonthly({type: 'Borrow'});
+  const { data: outcomeData,isFetching:isFetchingOutcomeData } = useGetStatisticCategoryMonthly({type: 'Outcome'});
+  const { data: incomeData ,isFetching:isFetchingIncomeData} = useGetStatisticCategoryMonthly({type: 'Income'});
+  const { data: borrowData, isFetching: isFetchingBorrowData } = useGetStatisticCategoryMonthly({type: 'Borrow'});
   const formattedOutcomeData = useMemo(() => {
     return outcomeData?.content.statistic?.reduce(
       (acc: TDisplayPieChart, item) => {
@@ -57,6 +57,7 @@ const PieChartRender = () => {
           dataset={formattedOutcomeData?.values || []}
           labels={formattedOutcomeData?.labels || []}
           isEmpty={formattedOutcomeData?.values.length === 0}
+          isLoading={isFetchingOutcomeData}
         />
       </div>
       <div className="col-span-12 lg:col-span-4">
@@ -65,6 +66,7 @@ const PieChartRender = () => {
           dataset={formattedIncomeData?.values || []}
           labels={formattedIncomeData?.labels || []}
           isEmpty={formattedIncomeData?.values.length === 0}
+          isLoading={isFetchingIncomeData}
         />
       </div>
       <div className="col-span-12 lg:col-span-4">
@@ -73,6 +75,7 @@ const PieChartRender = () => {
           dataset={formattedBorrowData?.values || []}
           labels={formattedBorrowData?.labels || []}
           isEmpty={formattedBorrowData?.values.length === 0}
+          isLoading={isFetchingBorrowData}
         />
       </div>
     </>

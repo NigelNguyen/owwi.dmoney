@@ -10,12 +10,19 @@ import { COMMON_COLOR } from "../../../constants/common";
 import BarChartComparison from "./BarChartComparison";
 
 const BarChartRender = () => {
-  const { data: thisWeekData } = useGetStatisticWeekly();
-  const { data: previousWeekData } = useGetStatisticPreviousWeekly();
+  const { data: thisWeekData, isFetching: isFetchingThisWeekData } =
+    useGetStatisticWeekly();
+  const { data: previousWeekData, isFetching: isFetchingPreviousWeekData } =
+    useGetStatisticPreviousWeekly();
 
-  const { data: monthlyData } = useGetStatisticMonthly();
-  const { data: previousMonthlyData } = useGetStatisticPreviousMonthly();
-  const { data: yearlyData } = useGetStatisticYearly();
+  const { data: monthlyData, isFetching: isFetchingMonthlyData } =
+    useGetStatisticMonthly();
+  const {
+    data: previousMonthlyData,
+    isFetching: isFetchingPreviousMonthlyData,
+  } = useGetStatisticPreviousMonthly();
+  const { data: yearlyData, isFetching: isFetchingYearlyData } =
+    useGetStatisticYearly();
 
   const weeklyDataset = useMemo(() => {
     return [
@@ -94,6 +101,7 @@ const BarChartRender = () => {
           }
           title="Weekly Outcome"
           labels={["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]}
+          isLoading={isFetchingThisWeekData || isFetchingPreviousWeekData}
         />
       </div>
       <div className="col-span-12 lg:col-span-6">
@@ -102,9 +110,10 @@ const BarChartRender = () => {
           labels={yearlyData?.content?.labels || []}
           isEmpty={!yearlyData?.content?.statistic.length}
           title="Last 5 years Outcome"
+          isLoading={isFetchingYearlyData}
         />
       </div>
-      <div className="col-span-2"/>
+      <div className="col-span-2" />
       <div className="col-span-12 lg:col-span-8">
         <BarChartComparison
           dataset={monthlyDataset}
@@ -127,6 +136,7 @@ const BarChartRender = () => {
             "Dec",
           ]}
           title="Monthly Outcome"
+          isLoading={isFetchingMonthlyData || isFetchingPreviousMonthlyData}
         />
       </div>
     </>

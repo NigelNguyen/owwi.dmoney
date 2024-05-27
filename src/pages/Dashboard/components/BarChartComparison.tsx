@@ -19,13 +19,12 @@ const BarChartComparison = ({
   isLoading?: boolean;
 }) => {
   return (
-    <div className="p-4 bg-white rounded-md w-full h-full">
-      {isLoading && (
-        <div className="w-full flex justify-center">
+    <div className="flex h-full min-h-80 flex-col justify-between p-4 bg-white rounded-md w-full">
+      {isLoading ? (
+        <div className="w-full flex flex-col h-full justify-center items-center">
           <Spin />
         </div>
-      )}
-      {!isLoading && isEmpty ? (
+      ) : isEmpty ? (
         <div className="flex items-center h-full">
           <EmptyChart className="w-full" />
         </div>

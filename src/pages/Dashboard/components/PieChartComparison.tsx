@@ -15,14 +15,14 @@ const PieChartComparison = ({
   isEmpty: boolean;
   isLoading?: boolean;
 }) => {
+  
   return (
-    <div className="flex h-full flex-col justify-between p-4 bg-white rounded-md items-center">
-      {isLoading && (
-        <div className="w-full flex justify-center">
+    <div className="flex h-full min-h-80 flex-col justify-between p-4 bg-white rounded-md items-center">
+      {isLoading ? (
+        <div className="w-full flex flex-col h-full justify-center items-center">
           <Spin />
         </div>
-      )}
-      {!isLoading && isEmpty ? (
+      ) : isEmpty ? (
         <div className="flex-1 items-center h-full">
           <EmptyChart />
         </div>
