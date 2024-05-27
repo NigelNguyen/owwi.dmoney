@@ -52,7 +52,7 @@ const EditRecord = ({
     type: record?.type || "",
     category: record?.category || "",
     partner: record?.partner || "",
-    amount: record?.amount || 0,
+    amount: record?.amount.toString() || "",
     description: record?.description || "",
     date: record?.date.split("T")[0] || "",
   };

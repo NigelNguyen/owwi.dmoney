@@ -1,4 +1,3 @@
-import React from "react";
 import { IAvatarProps } from "../Avatar";
 import { TShape, TSize } from "../../../types/constants";
 import { cn } from "../../../utils/cn";
@@ -25,7 +24,14 @@ const Icon = ({
   className,
 }: IIconProps) => {
   return (
-    <div className={cn("border-[1px] border-slate-50 hover:border-slate-800", iconVariantMap[variant], padding, className)}>
+    <div
+      className={cn(
+        "border-[1px] border-slate-50 hover:border-slate-800",
+        iconVariantMap[variant],
+        padding,
+        className
+      )}
+    >
       <img src={image} className={cn(iconSizeMap[size])} />
     </div>
   );
