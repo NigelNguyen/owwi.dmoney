@@ -43,7 +43,7 @@ const RandomPointsBackground = ({
       {points.map((point) => (
         <div
           key={point.id}
-          className="absolute bg-blue-02 rounded-full"
+          className="absolute bg-blue-400 rounded-full"
           style={{
             width: `${point.size}px`,
             height: `${point.size}px`,

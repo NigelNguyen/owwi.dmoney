@@ -14,7 +14,7 @@ export type BaseRecordDTO = {
   category: string;
   partner: string;
   type: string;
-  description: string;
+  description?: string;
   partnerName?: string;
   categoryName?: string;
   typeName?: string;

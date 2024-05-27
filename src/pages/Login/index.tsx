@@ -9,6 +9,7 @@ import { AuthContext } from "../../provider/authProvider";
 import { Link, useNavigate } from "react-router-dom";
 import { paths } from "../../routes/routes";
 import toast from "react-hot-toast";
+import { DEFAULT_ERROR_MESSAGE } from "../../constants/validateMessage";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ const Login: React.FC = () => {
         navigate(paths.records);
       },
       onError: (data) => {
-        toast.error(data.message);
+        toast.error(data?.response?.data?.message || DEFAULT_ERROR_MESSAGE);
       },
     });
   };

@@ -6,6 +6,7 @@ import { TUserForm } from "../Login/shared/schema";
 import { Link, useNavigate } from "react-router-dom";
 import { paths } from "../../routes/routes";
 import toast from "react-hot-toast";
+import { DEFAULT_ERROR_MESSAGE } from "../../constants/validateMessage";
 
 const Register = () => {
   const { mutate: register } = useRegister();
@@ -18,7 +19,7 @@ const Register = () => {
         navigate(paths.login);
       },
       onError: (data) => {
-        toast.success(data.message);
+        toast.error(data?.response?.data?.message || DEFAULT_ERROR_MESSAGE);
       },
     });
   };
@@ -48,19 +49,21 @@ const Register = () => {
   };
 
   return (
-    <AuthForm
-      onSubmit={registerHandler}
-      onConnectWallet={connectWallet}
-      formLabel={"Register"}
-      subElement={
-        <Link
-          to={paths.login}
-          className="text-blue-400 text-center w-full block underline"
-        >
-          Already have an account?
-        </Link>
-      }
-    />
+    <div className="bg-purple-02 h-[80vh] relative">
+      <AuthForm
+        onSubmit={registerHandler}
+        onConnectWallet={connectWallet}
+        formLabel={"Register"}
+        subElement={
+          <Link
+            to={paths.login}
+            className="text-blue-400 text-center w-full block underline"
+          >
+            Already have an account?
+          </Link>
+        }
+      />
+    </div>
   );
 };
 

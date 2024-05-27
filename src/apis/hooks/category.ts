@@ -10,7 +10,7 @@ import createAxios from "../axios";
 export type CategoryBaseDTO = {
   id?: string;
   name: string;
-  description: string;
+  description?: string;
 };
 
 export type CreateCategoryDTO = CategoryBaseDTO;

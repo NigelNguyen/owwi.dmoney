@@ -1,5 +1,6 @@
 import { Controller, useForm } from "react-hook-form";
-import { TUserForm } from "./schema";
+import { TUserForm, userSchema } from "./schema";
+import { zodResolver } from "@hookform/resolvers/zod";
 import CInput from "../../../components/atoms/Input";
 import VerticalField from "../../../components/atoms/VerticalField";
 import CButton from "../../../components/atoms/CButton";
@@ -22,6 +23,7 @@ const AuthForm = ({
   subElement?: React.ReactNode;
 }) => {
   const { control, handleSubmit } = useForm<TUserForm>({
+    resolver: zodResolver(userSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -40,8 +42,14 @@ const AuthForm = ({
           <Controller
             control={control}
             name="email"
-            render={({ field: { value, onChange } }) => {
-              return <CInput value={value} onChange={onChange} />;
+            render={({ field: { value, onChange }, fieldState: { error } }) => {
+              return (
+                <CInput
+                  value={value}
+                  onChange={onChange}
+                  errorMessage={error?.message}
+                />
+              );
             }}
           />
         </VerticalField>
@@ -50,9 +58,14 @@ const AuthForm = ({
           <Controller
             control={control}
             name="password"
-            render={({ field: { value, onChange } }) => {
+            render={({ field: { value, onChange }, fieldState: { error } }) => {
               return (
-                <CInput value={value} onChange={onChange} type="password" />
+                <CInput
+                  value={value}
+                  onChange={onChange}
+                  type="password"
+                  errorMessage={error?.message}
+                />
               );
             }}
           />

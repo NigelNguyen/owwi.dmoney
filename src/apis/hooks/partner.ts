@@ -5,7 +5,7 @@ import createAxios from "../axios";
 export type PartnerBaseDTO = {
   id?: string;
   name: string;
-  description: string;
+  description?: string;
 };
 
 export type CreatePartnerDTO = PartnerBaseDTO;

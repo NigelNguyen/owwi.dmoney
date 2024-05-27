@@ -5,3 +5,6 @@ export type IOptions = Array<{
   label: string;
   value: string;
 }>;
+
+
+export type TErrorResponse = { message: string }

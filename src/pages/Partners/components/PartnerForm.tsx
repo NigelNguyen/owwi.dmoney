@@ -2,8 +2,9 @@ import { Controller, useForm } from "react-hook-form";
 import VerticalField from "../../../components/atoms/VerticalField";
 import CInput from "../../../components/atoms/Input";
 import CButton from "../../../components/atoms/CButton";
-import { TPartnerForm } from "../types";
+import { TPartnerForm, partnerSchema } from "../types";
 import { useEffect } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const PartnerForm = ({
   submitHandler,
@@ -17,10 +18,8 @@ const PartnerForm = ({
   submitLabel: string;
 }) => {
   const { control, handleSubmit, reset } = useForm<TPartnerForm>({
-    defaultValues: {
-      description: "",
-      name: ""
-    },
+    resolver: zodResolver(partnerSchema),
+    defaultValues: initValues,
   });
 
   useEffect(() => {
@@ -42,8 +41,14 @@ const PartnerForm = ({
           <Controller
             control={control}
             name="name"
-            render={({ field: { value, onChange } }) => {
-              return <CInput value={value.toString()} onChange={onChange} />;
+            render={({ field: { value, onChange }, fieldState: { error } }) => {
+              return (
+                <CInput
+                  value={value.toString()}
+                  onChange={onChange}
+                  errorMessage={error?.message}
+                />
+              );
             }}
           />
         </VerticalField>
@@ -51,8 +56,17 @@ const PartnerForm = ({
           <Controller
             control={control}
             name="description"
-            render={({ field: { value, onChange } }) => {
-              return <CInput value={value.toString()} onChange={onChange} />;
+            render={({
+              field: { value = "", onChange },
+              fieldState: { error },
+            }) => {
+              return (
+                <CInput
+                  value={value}
+                  onChange={onChange}
+                  errorMessage={error?.message}
+                />
+              );
             }}
           />
         </VerticalField>

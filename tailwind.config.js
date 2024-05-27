@@ -17,6 +17,7 @@ export default {
       yellow: colors.amber,
       pink: colors.fuchsia,
       slate: colors.slate,
+      red: colors.red,
       blue: {
         ...colors.blue,
         "01": "#3a5bcc",

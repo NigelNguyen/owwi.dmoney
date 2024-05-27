@@ -4,7 +4,7 @@ import CButton from "../../../../components/atoms/CButton";
 import CInput from "../../../../components/atoms/Input";
 import VerticalField from "../../../../components/atoms/VerticalField";
 import AutoComplete from "../../../../components/molecules/AutoComplete";
-import { TRecordForm } from "../../type";
+import { TRecordForm, recordFormSchema } from "../../type";
 import { useEffect, useState } from "react";
 import Overlay from "../../../../components/Overlay";
 import CategoryForm from "../../../Categories/components/CategoryForm";
@@ -23,6 +23,7 @@ import { TypeBaseDTO } from "../../../../apis/hooks/type";
 import { TPartnerForm } from "../../../Partners/types";
 import { TCategoryForm } from "../../../Categories/types";
 import toast from "react-hot-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const RecordForm = ({
   submitHandler,
@@ -48,6 +49,7 @@ const RecordForm = ({
   const [isOpenCategoryForm, setIsOpenCategoryForm] = useState(false);
   const [isOpenPartnerForm, setIsOpenPartnerForm] = useState(false);
   const { control, reset, handleSubmit } = useForm<TRecordForm>({
+    resolver: zodResolver(recordFormSchema),
     defaultValues: initData,
   });
 
@@ -155,12 +157,16 @@ const RecordForm = ({
               <Controller
                 control={control}
                 name="category"
-                render={({ field: { value, onChange } }) => {
+                render={({
+                  field: { value, onChange },
+                  fieldState: { error },
+                }) => {
                   return (
                     <AutoComplete
                       value={value}
                       onChange={onChange}
                       options={categoriesOptions}
+                      errorMessage={error?.message}
                     />
                   );
                 }}
@@ -170,6 +176,7 @@ const RecordForm = ({
                 type="button"
                 onClick={() => setIsOpenCategoryForm(true)}
                 title="Create New Category"
+                className="h-fit py-[9px]"
               />
             </div>
           </VerticalField>
@@ -178,12 +185,16 @@ const RecordForm = ({
               <Controller
                 control={control}
                 name="partner"
-                render={({ field: { value, onChange } }) => {
+                render={({
+                  field: { value, onChange },
+                  fieldState: { error },
+                }) => {
                   return (
                     <AutoComplete
                       value={value}
                       onChange={onChange}
                       options={partnersOptions}
+                      errorMessage={error?.message}
                     />
                   );
                 }}
@@ -193,6 +204,7 @@ const RecordForm = ({
                 type="button"
                 onClick={() => setIsOpenPartnerForm(true)}
                 title="Create New Partner"
+                className="h-fit py-[9px]"
               />
             </div>
           </VerticalField>
@@ -200,12 +212,16 @@ const RecordForm = ({
             <Controller
               control={control}
               name="type"
-              render={({ field: { value, onChange } }) => {
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => {
                 return (
                   <AutoComplete
                     value={value}
                     onChange={onChange}
                     options={typesOptions}
+                    errorMessage={error?.message}
                   />
                 );
               }}
@@ -215,14 +231,17 @@ const RecordForm = ({
             <Controller
               control={control}
               name="amount"
-              render={({ field: { value, onChange } }) => {
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => {
                 return (
                   <CInput
                     value={value.toString()}
                     onChange={onChange}
                     type="number"
                     min={0}
-                    step={0.1}
+                    errorMessage={error?.message}
                   />
                 );
               }}
@@ -232,8 +251,17 @@ const RecordForm = ({
             <Controller
               control={control}
               name="description"
-              render={({ field: { value, onChange } }) => {
-                return <CInput value={value.toString()} onChange={onChange} />;
+              render={({
+                field: { value = "", onChange },
+                fieldState: { error },
+              }) => {
+                return (
+                  <CInput
+                    value={value}
+                    onChange={onChange}
+                    errorMessage={error?.message}
+                  />
+                );
               }}
             />
           </VerticalField>
@@ -241,12 +269,16 @@ const RecordForm = ({
             <Controller
               control={control}
               name="date"
-              render={({ field: { value, onChange } }) => {
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => {
                 return (
                   <CInput
                     value={value.toString()}
                     onChange={onChange}
                     type="date"
+                    errorMessage={error?.message}
                   />
                 );
               }}

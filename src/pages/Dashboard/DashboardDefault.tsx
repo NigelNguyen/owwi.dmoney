@@ -35,11 +35,13 @@ const DashboardDefault = () => {
         createTransaction(
           {
             transaction: JSON.stringify(transaction),
+            metaMaskAddress: userAccount
           },
           {
             onSuccess: (data) => {
               updateMember?.(data.content);
               setDisable(false);
+              toast.success("Payment Successfully!")
             },
             onError: () => {
               toast.error("Error when create transaction!");

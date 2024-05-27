@@ -2,8 +2,9 @@ import { Controller, useForm } from "react-hook-form";
 import VerticalField from "../../../components/atoms/VerticalField";
 import CInput from "../../../components/atoms/Input";
 import CButton from "../../../components/atoms/CButton";
-import { TCategoryForm } from "../types";
+import { TCategoryForm, categorySchema } from "../types";
 import { useEffect } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const CategoryForm = ({
   submitHandler,
@@ -17,6 +18,7 @@ const CategoryForm = ({
   submitLabel: string;
 }) => {
   const { control, handleSubmit, reset } = useForm({
+    resolver: zodResolver(categorySchema),
     defaultValues: initValues,
   });
 
@@ -39,8 +41,14 @@ const CategoryForm = ({
           <Controller
             control={control}
             name="name"
-            render={({ field: { value, onChange } }) => {
-              return <CInput value={value.toString()} onChange={onChange} />;
+            render={({ field: { value, onChange }, fieldState: { error } }) => {
+              return (
+                <CInput
+                  value={value.toString()}
+                  onChange={onChange}
+                  errorMessage={error?.message}
+                />
+              );
             }}
           />
         </VerticalField>
@@ -48,8 +56,17 @@ const CategoryForm = ({
           <Controller
             control={control}
             name="description"
-            render={({ field: { value, onChange } }) => {
-              return <CInput value={value.toString()} onChange={onChange} />;
+            render={({
+              field: { value = "", onChange },
+              fieldState: { error },
+            }) => {
+              return (
+                <CInput
+                  value={value}
+                  onChange={onChange}
+                  errorMessage={error?.message}
+                />
+              );
             }}
           />
         </VerticalField>

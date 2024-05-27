@@ -63,9 +63,9 @@ const CreateRecord = ({
           type: "",
           category: "",
           partner: "",
-          amount: 0,
+          amount: "",
           description: "",
-          date: ""
+          date: new Date().toISOString().split("T")[0]
         }}
       />
     </>
