@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { AuthContext } from "../../provider/authProvider";
-import DashboardDefault from "./components/DashboardDefault";
-import DashboardMember from "./components/DashboardMember";
+import DashboardDefault from "./DashboardDefault";
+import DashboardMember from "./DashboardMember";
 
 const DashBoard = () => {
   const { role } = useContext(AuthContext);

@@ -1,11 +1,12 @@
 import { useContext, useState } from "react";
-import CButton from "../../../components/atoms/CButton";
-import { IPlainObject } from "../../../types/common";
+import CButton from "../../components/atoms/CButton";
+import { IPlainObject } from "../../types/common";
 import { ethers } from "ethers";
-import { useCreateTransaction } from "../../../apis/hooks/transaction";
-import { AuthContext } from "../../../provider/authProvider";
-import Spin from "../../../components/atoms/Spin";
+import { useCreateTransaction } from "../../apis/hooks/transaction";
+import { AuthContext } from "../../provider/authProvider";
+import Spin from "../../components/atoms/Spin";
 import toast from "react-hot-toast";
+import { OwwiLogo } from "../../assets/images";
 
 const DashboardDefault = () => {
   const [disable, setDisable] = useState(false);
@@ -62,9 +63,13 @@ const DashboardDefault = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4 text-center mt-10">
-      <p>Join Owwi Member to Unlock Dashboard once and for all</p>
-      <p>With only 0.00000000000000001 ETH</p>
+    <div className="flex flex-col gap-4 text-center mt-10 mx-auto bg-white w-fit p-8 rounded-lg max-w-96 hover:shadow-lg">
+      <p className="text-lg font-medium">Join Owwi Member</p>
+      <p>To Unlock Dashboard once and for all</p>
+      <img src={OwwiLogo} />
+      <p className="text-lg">
+        With only <strong>0.01 ETH</strong>
+      </p>
 
       <CButton
         label="Join Now"
@@ -74,9 +79,9 @@ const DashboardDefault = () => {
       />
 
       {disable && (
-        <div className="flex gap-2 items-center text-center justify-center">
+        <div className="flex flex-col gap-2 items-center text-center justify-center">
           <Spin />
-          <span className="text-xl">
+          <span className="text-md">
             Please wait... It will take a minute...
           </span>
         </div>

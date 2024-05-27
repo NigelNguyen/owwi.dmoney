@@ -20,7 +20,7 @@ function App() {
         <Toaster
           toastOptions={{
             position: "bottom-right",
-            duration: 1000
+            duration: 2000
           }}
         />
       </BrowserRouter>

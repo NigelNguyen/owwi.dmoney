@@ -34,7 +34,7 @@ const Header = () => {
   const navigatePaths = [
     {
       path: paths.records,
-      label: "Record",
+      label: "Records",
     },
     {
       path: paths.categories,
