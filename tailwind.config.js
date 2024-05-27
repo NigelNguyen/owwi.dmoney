@@ -13,14 +13,15 @@ export default {
       white: colors.white,
       gray: colors.slate,
       green: colors.emerald,
-      purple: { ...colors.violet, "01": "#e2e6f8" },
+      purple: { ...colors.violet, "01": "#e2e6f8", "02": "#ede1ff" },
       yellow: colors.amber,
       pink: colors.fuchsia,
       slate: colors.slate,
       blue: {
         ...colors.blue,
-        "01": "#3A5BCC",
-        "02": "#3A5BFF",
+        "01": "#3a5bcc",
+        "02": "#3a5bff",
+        "03": "#4e36f8",
       },
       text: {
         title: "#000",

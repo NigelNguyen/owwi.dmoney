@@ -18,7 +18,7 @@ const Login: React.FC = () => {
   const handleLogin = (data: TUserForm) => {
     loginNormal(data, {
       onSuccess: (data) => {
-        toast.success("Login successfully!")
+        toast.success("Login successfully!");
         login?.(data.content);
         navigate(paths.records);
       },
@@ -57,19 +57,21 @@ const Login: React.FC = () => {
   };
 
   return (
-    <AuthForm
-      onSubmit={handleLogin}
-      onConnectWallet={connectWallet}
-      formLabel={"Login"}
-      subElement={
-        <Link
-          to={paths.register}
-          className="text-blue-400 text-center w-full block underline"
-        >
-          Do not have an account?
-        </Link>
-      }
-    />
+    <div className="bg-purple-02 h-[80vh] relative">
+      <AuthForm
+        onSubmit={handleLogin}
+        onConnectWallet={connectWallet}
+        formLabel={"Login"}
+        subElement={
+          <Link
+            to={paths.register}
+            className="text-blue-400 text-center w-full block underline"
+          >
+            Do not have an account?
+          </Link>
+        }
+      />
+    </div>
   );
 };
 

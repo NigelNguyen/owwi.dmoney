@@ -85,7 +85,7 @@ const BarChartRender = () => {
 
   return (
     <>
-      <div className="col-span-6">
+      <div className="col-span-12 lg:col-span-6">
         <BarChartComparison
           dataset={weeklyDataset}
           isEmpty={
@@ -96,7 +96,7 @@ const BarChartRender = () => {
           labels={["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]}
         />
       </div>
-      <div className="col-span-6">
+      <div className="col-span-12 lg:col-span-6">
         <BarChartComparison
           dataset={yearlyDataset}
           labels={yearlyData?.content?.labels || []}
@@ -105,7 +105,7 @@ const BarChartRender = () => {
         />
       </div>
       <div className="col-span-2"/>
-      <div className="col-span-8">
+      <div className="col-span-12 lg:col-span-8">
         <BarChartComparison
           dataset={monthlyDataset}
           isEmpty={

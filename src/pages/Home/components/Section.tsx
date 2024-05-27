@@ -2,15 +2,15 @@ import React from "react";
 import { cn } from "../../../utils/cn";
 import ContentWrapper from "../../../components/atoms/ContentWrapper";
 
-export type TTheme = "dark" | "light";
+export type TTheme = "purple" | "blue";
 
 const themeMap: Record<TTheme, string> = {
-  dark: "bg-purple-01",
-  light: "bg-white",
+  purple: "bg-purple-02",
+  blue: "bg-blue-01",
 };
 const Section = ({
   children,
-  theme = "light",
+  theme = "purple",
 }: {
   children: React.ReactNode;
   theme?: TTheme;

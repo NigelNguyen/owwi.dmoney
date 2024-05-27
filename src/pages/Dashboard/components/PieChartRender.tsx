@@ -51,7 +51,7 @@ const PieChartRender = () => {
 
   return (
     <>
-      <div className="col-span-4">
+      <div className="col-span-12 lg:col-span-4">
         <PieChartComparison
           title="Outcome"
           dataset={formattedOutcomeData?.values || []}
@@ -59,7 +59,7 @@ const PieChartRender = () => {
           isEmpty={formattedOutcomeData?.values.length === 0}
         />
       </div>
-      <div className="col-span-4">
+      <div className="col-span-12 lg:col-span-4">
         <PieChartComparison
           title="Income"
           dataset={formattedIncomeData?.values || []}
@@ -67,7 +67,7 @@ const PieChartRender = () => {
           isEmpty={formattedIncomeData?.values.length === 0}
         />
       </div>
-      <div className="col-span-4">
+      <div className="col-span-12 lg:col-span-4">
         <PieChartComparison
           title="Borrow"
           dataset={formattedBorrowData?.values || []}
