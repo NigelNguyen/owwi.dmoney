@@ -7,9 +7,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { paths } from "../../routes/routes";
 import toast from "react-hot-toast";
 import { DEFAULT_ERROR_MESSAGE } from "../../constants/validateMessage";
+import { useContext, useEffect } from "react";
+import { AuthContext } from "../../provider/authProvider";
 
 const Register = () => {
   const { mutate: register } = useRegister();
+  const { role } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const registerHandler = (data: TUserForm) => {
@@ -47,6 +50,12 @@ const Register = () => {
       toast.error("No Ethereum provider found. Please install MetaMask first.");
     }
   };
+
+  useEffect(() => {
+    if (role !== "guest") {
+      navigate(paths.records);
+    }
+  }, [role]);
 
   return (
     <div className="bg-purple-02 h-[80vh] relative">

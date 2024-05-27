@@ -1,5 +1,5 @@
 // src/Login.tsx
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { ethers } from "ethers";
 import { IPlainObject } from "../../types/common";
 import { useLogin } from "../../apis/hooks/auth";
@@ -14,7 +14,7 @@ import { DEFAULT_ERROR_MESSAGE } from "../../constants/validateMessage";
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const { mutate: loginNormal } = useLogin();
-  const { login } = useContext(AuthContext);
+  const { login, role } = useContext(AuthContext);
 
   const handleLogin = (data: TUserForm) => {
     loginNormal(data, {
@@ -56,6 +56,12 @@ const Login: React.FC = () => {
       toast.error("No Ethereum provider found. Please install MetaMask first");
     }
   };
+
+  useEffect(() => {
+    if (role !== "guest") {
+      navigate(paths.records);
+    }
+  }, [role]);
 
   return (
     <div className="bg-purple-02 h-[80vh] relative">

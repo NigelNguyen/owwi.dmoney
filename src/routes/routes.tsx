@@ -35,13 +35,13 @@ export const routes: TRoutes = [
   {
     path: paths.login,
     element: <Login />,
-    roles: ["guest"],
+    roles: ["guest", "member", "user"],
     useHomeLayout: true,
   },
   {
     path: paths.register,
     element: <Register />,
-    roles: ["guest"],
+    roles: ["guest", "member", "user"],
     useHomeLayout: true,
   },
   {

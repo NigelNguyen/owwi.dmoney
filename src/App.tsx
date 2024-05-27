@@ -1,6 +1,6 @@
 import "./App.css";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
-import PageNotFound from "./pages/PageNotFound/PageNotFound";
+import PageNotFound from "./pages/PageNotFound";
 
 import generateRoutes from "./routes/generateRoutes";
 import { useContext } from "react";
