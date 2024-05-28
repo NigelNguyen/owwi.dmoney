@@ -1,3 +1,5 @@
+import HomeLayout from "../components/layouts/HomeLayout";
+import MainLayout from "../components/layouts/MainLayout";
 import Categories from "../pages/Categories";
 import DashBoard from "../pages/Dashboard";
 import Home from "../pages/Home";
@@ -11,7 +13,7 @@ export type TRoute = {
   path: string;
   element: React.ReactNode;
   roles: Array<TRole>;
-  useHomeLayout?: boolean;
+  layout: ({ children }: {    children?: React.ReactNode;}) => JSX.Element ;
 };
 export type TRoutes = Array<TRoute>;
 
@@ -30,38 +32,42 @@ export const routes: TRoutes = [
     path: paths.home,
     element: <Home />,
     roles: ["guest", "member", "user"],
-    useHomeLayout: true,
+    layout: HomeLayout,
   },
   {
     path: paths.login,
     element: <Login />,
     roles: ["guest", "member", "user"],
-    useHomeLayout: true,
+    layout: HomeLayout,
   },
   {
     path: paths.register,
     element: <Register />,
     roles: ["guest", "member", "user"],
-    useHomeLayout: true,
+    layout: HomeLayout,
   },
   {
     path: paths.dashboard,
     element: <DashBoard />,
     roles: ["member", "user"],
+    layout: MainLayout
   },
   {
     path: paths.records,
     element: <Records />,
     roles: ["member", "user"],
+    layout: MainLayout
   },
   {
     path: paths.categories,
     element: <Categories />,
     roles: ["member", "user"],
+    layout: MainLayout
   },
   {
     path: paths.partners,
     element: <Partners />,
     roles: ["member", "user"],
+    layout: MainLayout
   },
 ];

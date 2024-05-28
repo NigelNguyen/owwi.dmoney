@@ -1,7 +1,7 @@
 import React from "react";
 import Footer from "../molecules/Footer";
 
-const HomeLayout = ({ children }: { children: React.ReactNode }) => {
+const HomeLayout = ({ children }: { children?: React.ReactNode }) => {
   return (
     <div>
       {children}
