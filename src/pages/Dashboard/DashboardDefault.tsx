@@ -14,15 +14,14 @@ const DashboardDefault = () => {
   const { mutate: createTransaction } = useCreateTransaction();
 
   const joinMemberHandler = async () => {
-    const window_ = window as IPlainObject;
-    if (window_.ethereum) {
+    if (window.ethereum) {
       try {
         setDisable(true);
-        await window_.ethereum.request({
+        await window.ethereum.request({
           method: "eth_requestAccounts",
         });
 
-        const provider = new ethers.BrowserProvider(window_.ethereum);
+        const provider = new ethers.BrowserProvider(window.ethereum);
         const signer = await provider.getSigner();
         const userAccount = await signer.getAddress();
 

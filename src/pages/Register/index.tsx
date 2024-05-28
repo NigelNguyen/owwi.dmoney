@@ -1,6 +1,5 @@
 import { ethers } from "ethers";
 import { useRegister } from "../../apis/hooks/auth";
-import { IPlainObject } from "../../types/common";
 import AuthForm from "../Login/shared/AuthForm";
 import { TUserForm } from "../Login/shared/schema";
 import { Link, useNavigate } from "react-router-dom";
@@ -28,14 +27,13 @@ const Register = () => {
   };
 
   const connectWallet = async () => {
-    const window_ = window as IPlainObject;
-    if (window_.ethereum) {
+    if (window.ethereum) {
       try {
-        await window_.ethereum.request({
+        await window.ethereum.request({
           method: "eth_requestAccounts",
         });
 
-        const provider = new ethers.BrowserProvider(window_.ethereum);
+        const provider = new ethers.BrowserProvider(window.ethereum);
         const signer = await provider.getSigner();
         const userAccount = await signer.getAddress();
         registerHandler({
