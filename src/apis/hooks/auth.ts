@@ -8,6 +8,7 @@ export type UserDTO = {
   email?: string;
   password?: string;
   metaMaskAddress?: string;
+  signature?: string;
 };
 
 export type LoginResponseDTO = {

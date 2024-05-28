@@ -7,6 +7,7 @@ import { AuthContext } from "../../provider/authProvider";
 import Spin from "../../components/atoms/Spin";
 import toast from "react-hot-toast";
 import { OwwiLogo } from "../../assets/images";
+import { DEFAULT_CHAIN_ID } from "../../constants/common";
 
 const DashboardDefault = () => {
   const [disable, setDisable] = useState(false);
@@ -17,9 +18,16 @@ const DashboardDefault = () => {
     if (window.ethereum) {
       try {
         setDisable(true);
-        await window.ethereum.request({
-          method: "eth_requestAccounts",
+        const chainId = await window.ethereum.request({
+          method: "eth_chainId",
         });
+
+        if (chainId !== DEFAULT_CHAIN_ID) {
+          await window.ethereum.request({
+            method: "wallet_switchEthereumChain",
+            params: [{ chainId: DEFAULT_CHAIN_ID }],
+          });
+        }
 
         const provider = new ethers.BrowserProvider(window.ethereum);
         const signer = await provider.getSigner();
@@ -34,13 +42,13 @@ const DashboardDefault = () => {
         createTransaction(
           {
             transaction: JSON.stringify(transaction),
-            metaMaskAddress: userAccount
+            metaMaskAddress: userAccount,
           },
           {
             onSuccess: (data) => {
               updateMember?.(data.content);
               setDisable(false);
-              toast.success("Payment Successfully!")
+              toast.success("Payment Successfully!");
             },
             onError: () => {
               toast.error("Error when create transaction!");
@@ -52,9 +60,10 @@ const DashboardDefault = () => {
         const errorCode = error as IPlainObject;
         if (errorCode.code === "ACTION_REJECTED") {
           toast.error("Canceled Transaction");
+        } else if (errorCode.code === "INSUFFICIENT_FUNDS") {
+          toast.error("Account do not has enough gas!");
         } else {
           toast.error("There was an error during transaction!");
-          console.error({ error });
         }
         setDisable(false);
       }

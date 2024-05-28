@@ -26,3 +26,7 @@ export const PASTEL_COLORS = [
 ];
 
 export const COMMON_COLOR = ["#e8e8e8", "#7F8EC3", "#299d91", "#A27744"];
+
+export const SIGN_MESSAGE = "By signing, you are proving you own this wallet. This does not initiate a transaction or cost any fees."
+
+export const DEFAULT_CHAIN_ID = "0xaa36a7"

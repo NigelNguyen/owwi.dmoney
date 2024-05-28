@@ -1,4 +1,3 @@
-import { ethers } from "ethers";
 import { useRegister } from "../../apis/hooks/auth";
 import AuthForm from "../Login/shared/AuthForm";
 import { TUserForm } from "../Login/shared/schema";
@@ -8,6 +7,7 @@ import toast from "react-hot-toast";
 import { DEFAULT_ERROR_MESSAGE } from "../../constants/validateMessage";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../../provider/authProvider";
+import { getWallet } from "../../utils/getWallet";
 
 const Register = () => {
   const { mutate: register } = useRegister();
@@ -27,26 +27,14 @@ const Register = () => {
   };
 
   const connectWallet = async () => {
-    if (window.ethereum) {
-      try {
-        await window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
-
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        const signer = await provider.getSigner();
-        const userAccount = await signer.getAddress();
-        registerHandler({
-          metaMaskAddress: userAccount,
-          email: "",
-          password: "",
-        });
-      } catch (error) {
-        toast.error("User denied account access or there was an error");
-      }
-    } else {
-      toast.error("No Ethereum provider found. Please install MetaMask first.");
-    }
+    getWallet((metaMaskAddress, signature) => {
+      registerHandler({
+        metaMaskAddress,
+        signature,
+        email: "",
+        password: "",
+      });
+    }, true);
   };
 
   useEffect(() => {

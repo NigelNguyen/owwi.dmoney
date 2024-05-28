@@ -1,7 +1,5 @@
 // src/Login.tsx
 import React, { useContext, useEffect } from "react";
-import { ethers } from "ethers";
-import { IPlainObject } from "../../types/common";
 import { useLogin } from "../../apis/hooks/auth";
 import AuthForm from "./shared/AuthForm";
 import { TUserForm } from "./shared/schema";
@@ -10,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { paths } from "../../routes/routes";
 import toast from "react-hot-toast";
 import { DEFAULT_ERROR_MESSAGE } from "../../constants/validateMessage";
+import { getWallet } from "../../utils/getWallet";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -29,32 +28,19 @@ const Login: React.FC = () => {
     });
   };
 
-  const sendAddressToBackend = async (address: string) => {
+  const sendAddressToBackend = async (address: string, signature: string) => {
     handleLogin({
       email: "",
       password: "",
       metaMaskAddress: address,
+      signature,
     });
   };
 
   const connectWallet = async () => {
-    const window_ = window as IPlainObject;
-    if (window_.ethereum) {
-      try {
-        await window_.ethereum.request({
-          method: "eth_requestAccounts",
-        });
-
-        const provider = new ethers.BrowserProvider(window_.ethereum);
-        const signer = await provider.getSigner();
-        const userAccount = await signer.getAddress();
-        sendAddressToBackend(userAccount);
-      } catch (error) {
-        toast.error("User denied account access or there was an error");
-      }
-    } else {
-      toast.error("No Ethereum provider found. Please install MetaMask first");
-    }
+    getWallet((userAccount, signature) => {
+      sendAddressToBackend(userAccount, signature);
+    }, true);
   };
 
   useEffect(() => {
