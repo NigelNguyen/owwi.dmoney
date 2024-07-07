@@ -6,10 +6,12 @@ import {
 } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import createAxios from "../axios";
+import { TRecordFilter } from "../../pages/Records/type";
+import { removeUndefinedKeys } from "../../utils/truncateObject";
 
 export type BaseRecordDTO = {
   id?: string;
-  date:string;
+  date: string;
   amount: number;
   category: string;
   partner: string;
@@ -67,11 +69,14 @@ export const useUpdateRecord = () => {
   });
 };
 
-export const useGetRecords = (): UseQueryResult<GetRecordsDTO, AxiosError> => {
+export const useGetRecords = (
+  filter: TRecordFilter
+): UseQueryResult<GetRecordsDTO, AxiosError> => {
   return useQuery({
-    queryKey: [queryKey.list],
+    queryKey: [queryKey.list, filter],
     queryFn: () => {
-      return createAxios.get("/records");
+      const params = new URLSearchParams(removeUndefinedKeys(filter));
+      return createAxios.get(`/records?${params}`);
     },
   });
 };
