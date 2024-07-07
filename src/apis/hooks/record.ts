@@ -24,6 +24,7 @@ export type BaseRecordDTO = {
 
 export type CreateRecordDTO = BaseRecordDTO;
 export type UpdateRecordDTO = BaseRecordDTO & { id: string };
+export type DeleteRecordDTO = { id: string };
 
 export type GetRecordsDTO = {
   message: string;
@@ -65,7 +66,7 @@ export const useUpdateRecord = () => {
   const queryClient = useQueryClient();
   return useMutation<UpdateRecordDTO, AxiosError, UpdateRecordDTO>({
     mutationFn: (payload) => {
-      return createAxios.put("/record", payload);
+      return createAxios.post(`/record/${payload.id}/update`, payload);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [queryKey.list] });
@@ -97,5 +98,18 @@ export const useGetRecordById = ({
       return createAxios.get(`/record/${id}`);
     },
     retry: false,
+  });
+};
+
+export const useDeleteRecordById = () => {
+  const queryClient = useQueryClient();
+  return useMutation<DeleteRecordDTO, AxiosError, DeleteRecordDTO>({
+    mutationFn: ({ id }) => {
+      return createAxios.post(`/record/${id}/delete`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [queryKey.list] });
+      queryClient.invalidateQueries({ queryKey: [queryKey.detail] });
+    },
   });
 };

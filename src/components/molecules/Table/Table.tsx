@@ -13,9 +13,11 @@ const tableAlignMap: Record<TAlign, string> = {
 const Table = <TData,>({
   tableConfig,
   isLoading = false,
+  isShowPagination = false,
 }: {
   tableConfig: TableResult<TData>;
   isLoading?: boolean;
+  isShowPagination?: boolean;
 }) => {
   const {
     columnsConfig,
@@ -35,7 +37,7 @@ const Table = <TData,>({
   };
 
   return (
-    <div className="p-3 bg-white rounded-md w-full max-h-[70vh] overflow-y-scroll">
+    <div className="w-full p-3 bg-white rounded-md">
       <table className="w-full border-collapse">
         <thead className="border-b-2 text-text-header">
           <tr key="table-header" className="mb-8">
@@ -103,14 +105,16 @@ const Table = <TData,>({
             })}
         </tbody>
       </table>
-      <div className="flex justify-end mt-2">
-        <TablePagination
-          page={page}
-          totalPage={totalPage}
-          onNextClick={onNextClick}
-          onPreviousClick={onPreviousClick}
-        />
-      </div>
+      {isShowPagination && (
+        <div className="flex justify-end mt-2">
+          <TablePagination
+            page={page}
+            totalPage={totalPage}
+            onNextClick={onNextClick}
+            onPreviousClick={onPreviousClick}
+          />
+        </div>
+      )}
     </div>
   );
 };

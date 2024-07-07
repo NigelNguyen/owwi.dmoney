@@ -4,13 +4,14 @@ import Table from "../../components/molecules/Table/Table";
 import useTable from "../../hooks/useTable";
 import CreateRecord from "./components/CreateRecord";
 import CButton from "../../components/atoms/CButton";
-import { FaPencil } from "react-icons/fa6";
+import { FaTrash } from "react-icons/fa6";
 import { useGetPartners } from "../../apis/hooks/partner";
 import { useGetTypes } from "../../apis/hooks/type";
 import EditRecord from "./components/EditRecord";
 import { useGetCategories } from "../../apis/hooks/category";
 import RecordFilter from "./components/RecordFilter";
 import { TRecordFilter } from "./type";
+import DeleteRecordPopup from "./components/DeletePopup";
 
 const Records = () => {
   const [filter, setFilter] = useState<TRecordFilter>({});
@@ -58,21 +59,23 @@ const Records = () => {
         type: "custom",
         customCellRender: (data) => {
           return (
-            <CButton
-              label={<FaPencil />}
-              variant="outlined"
-              className="px-2"
-              onClick={() => {
-                setEditId(data.id || "");
-                setIsOpenEditForm(true);
-              }}
-            />
+            <div className="flex justify-end gap-2">
+              <CButton
+                label={<FaTrash />}
+                variant="outlined"
+                className="px-2 text-red-500 border-red-500 hover:border-red-600 hover:text-white hover:bg-red-500"
+                onClick={() => {
+                  setSelectedId(data.id || "");
+                  setIsOpenDelete(true);
+                }}
+              />
+            </div>
           );
         },
       },
     ],
     onRowDoubleClick: (data) => {
-      setEditId(data.id || "");
+      setSelectedId(data.id || "");
       setIsOpenEditForm(true);
     },
   });
@@ -85,7 +88,8 @@ const Records = () => {
   const { data: types } = useGetTypes();
   const { data: partners } = useGetPartners();
   const [isOpenEditForm, setIsOpenEditForm] = useState(false);
-  const [editId, setEditId] = useState("");
+  const [isOpenDelete, setIsOpenDelete] = useState(false);
+  const [selectedId, setSelectedId] = useState("");
 
   useEffect(() => {
     tableConfig.setData(records?.content.records || []);
@@ -110,7 +114,7 @@ const Records = () => {
       />
       {isOpenEditForm && (
         <EditRecord
-          recordId={editId}
+          recordId={selectedId}
           isOpen={isOpenEditForm}
           setIsOpen={setIsOpenEditForm}
           categories={categories?.content.categories || []}
@@ -118,7 +122,14 @@ const Records = () => {
           types={types?.content.types || []}
         />
       )}
-      <Table tableConfig={tableConfig} isLoading={isFetching} />
+      {isOpenDelete && (
+        <DeleteRecordPopup
+          id={selectedId}
+          setOpenModal={setIsOpenDelete}
+          open={isOpenDelete}
+        />
+      )}
+      <Table tableConfig={tableConfig} isLoading={isFetching} isShowPagination/>
     </>
   );
 };
