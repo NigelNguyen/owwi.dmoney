@@ -3,12 +3,14 @@ import { AxiosError, AxiosResponse } from "axios";
 import { TRole } from "../../types/constants";
 import createAxios from "../axios";
 import { TErrorResponse } from "../../types/common";
+import { SIGN_MESSAGE } from "../../constants/common";
 
 export type UserDTO = {
   email?: string;
   password?: string;
   metaMaskAddress?: string;
   signature?: string;
+  signatureMessage?: string;
 };
 
 export type LoginResponseDTO = {
@@ -25,7 +27,10 @@ export type LoginResponseDTO = {
 export const useRegister = () => {
   return useMutation<AxiosResponse, AxiosError<TErrorResponse>, UserDTO>({
     mutationFn: (payload) => {
-      return createAxios.post("/register", payload);
+      return createAxios.post("/register", {
+        ...payload,
+        signatureMessage: SIGN_MESSAGE,
+      });
     },
   });
 };
