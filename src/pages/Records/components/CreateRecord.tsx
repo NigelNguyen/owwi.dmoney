@@ -51,6 +51,7 @@ const CreateRecord = ({
         />
       </div>
       <RecordForm
+        title="Create Record"
         setIsOpen={setIsOpen}
         isOpen={isOpen}
         isPending={isPending}
@@ -65,7 +66,7 @@ const CreateRecord = ({
           partner: "",
           amount: "",
           description: "",
-          date: new Date().toISOString().split("T")[0]
+          date: new Date().toISOString().split("T")[0],
         }}
       />
     </>

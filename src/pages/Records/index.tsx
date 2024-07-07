@@ -9,9 +9,12 @@ import { useGetPartners } from "../../apis/hooks/partner";
 import { useGetTypes } from "../../apis/hooks/type";
 import EditRecord from "./components/EditRecord";
 import { useGetCategories } from "../../apis/hooks/category";
+import RecordFilter from "./components/RecordFilter";
+import { TRecordFilter } from "./type";
 
 const Records = () => {
-  const { data: records, isFetching } = useGetRecords();
+  const [filter, setFilter] = useState<TRecordFilter>({});
+  const { data: records, isFetching } = useGetRecords(filter);
   const { data: categories } = useGetCategories();
   const { data: types } = useGetTypes();
   const { data: partners } = useGetPartners();
@@ -82,19 +85,23 @@ const Records = () => {
   });
 
   useEffect(() => {
-    if (records?.content.records?.length) {
-      tableConfig.setData(records?.content.records);
-    }
-  }, [records]);
+    tableConfig.setData(records?.content.records || []);
+  }, [records, tableConfig]);
 
   return (
     <>
+      <RecordFilter
+        categories={categories?.content.categories || []}
+        partners={partners?.content.partners || []}
+        types={types?.content.types || []}
+        setFilter={setFilter}
+        isPending={isFetching}
+      />
       <CreateRecord
         categories={categories?.content.categories || []}
         partners={partners?.content.partners || []}
         types={types?.content.types || []}
       />
-      {/* Edit Record Form */}
       {isOpenEditForm && (
         <EditRecord
           recordId={editId}

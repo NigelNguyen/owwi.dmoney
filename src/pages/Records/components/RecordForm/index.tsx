@@ -35,6 +35,7 @@ const RecordForm = ({
   types,
   initData,
   submitLabel,
+  title,
 }: {
   submitHandler: (data: TRecordForm) => void;
   isPending?: boolean;
@@ -45,6 +46,7 @@ const RecordForm = ({
   types: TypeBaseDTO[];
   initData?: TRecordForm;
   submitLabel: string;
+  title: string;
 }) => {
   const [isOpenCategoryForm, setIsOpenCategoryForm] = useState(false);
   const [isOpenPartnerForm, setIsOpenPartnerForm] = useState(false);
@@ -147,7 +149,7 @@ const RecordForm = ({
         setIsOpen(false);
       }}
       className="min-w-[400px]"
-      title="Create Record"
+      title={title}
       nextOverlay={otherForms}
     >
       <form onReset={reset} onSubmit={onSubmit}>

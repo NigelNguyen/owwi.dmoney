@@ -22,10 +22,10 @@ const EditRecord = ({
   categories: CategoryBaseDTO[];
   types: TypeBaseDTO[];
 }) => {
-  const { mutate: createRecord, isPending } = useUpdateRecord();
+  const { mutate: updateRecord, isPending } = useUpdateRecord();
 
   const submitHandler = (data: TRecordForm) => {
-    createRecord(
+    updateRecord(
       {
         ...data,
         id: recordId,
@@ -59,6 +59,7 @@ const EditRecord = ({
 
   return (
     <RecordForm
+      title="Edit Record"
       setIsOpen={setIsOpen}
       isOpen={isOpen}
       isPending={isPending || isFetchingRecord}

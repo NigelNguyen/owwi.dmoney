@@ -11,3 +11,16 @@ export const recordFormSchema = zod.object({
 });
 
 export type TRecordForm = zod.infer<typeof recordFormSchema>;
+
+export const recordFilterSchema = zod.object({
+  partner: zod.string().optional(),
+  category: zod.string().optional(),
+  description: zod.string().optional(),
+  type: zod.string().optional(),
+  min: zod.string().optional(),
+  max: zod.string().optional(),
+  from: zod.string().optional(),
+  to: zod.string().optional(),
+});
+
+export type TRecordFilter = zod.infer<typeof recordFilterSchema>;
