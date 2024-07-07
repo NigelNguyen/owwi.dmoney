@@ -2,6 +2,7 @@ import { TableResult } from "../../../hooks/useTable";
 import { TAlign } from "../../../types/constants";
 import { cn } from "../../../utils/cn";
 import Spin from "../../atoms/Spin";
+import { TablePagination } from "./TablePagination";
 
 const tableAlignMap: Record<TAlign, string> = {
   center: "text-center",
@@ -16,11 +17,26 @@ const Table = <TData,>({
   tableConfig: TableResult<TData>;
   isLoading?: boolean;
 }) => {
-  const { columnsConfig, data, onRowClick, onRowDoubleClick } = tableConfig;
+  const {
+    columnsConfig,
+    data,
+    onRowClick,
+    onRowDoubleClick,
+    setPage,
+    page,
+    totalPage,
+  } = tableConfig;
+
+  const onNextClick = () => {
+    if (page + 1 <= totalPage) setPage(page + 1);
+  };
+  const onPreviousClick = () => {
+    if (page - 1 >= 1) setPage(page - 1);
+  };
 
   return (
     <div className="p-3 bg-white rounded-md w-full max-h-[70vh] overflow-y-scroll">
-      <table className="border-collapse w-full">
+      <table className="w-full border-collapse">
         <thead className="border-b-2 text-text-header">
           <tr key="table-header" className="mb-8">
             {columnsConfig.map((column) => (
@@ -37,7 +53,7 @@ const Table = <TData,>({
           {isLoading && (
             <tr className="w-full text-center">
               <td colSpan={columnsConfig.length} className="py-8">
-                <div className="flex w-full justify-center">
+                <div className="flex justify-center w-full">
                   <Spin />
                 </div>
               </td>
@@ -87,6 +103,14 @@ const Table = <TData,>({
             })}
         </tbody>
       </table>
+      <div className="flex justify-end mt-2">
+        <TablePagination
+          page={page}
+          totalPage={totalPage}
+          onNextClick={onNextClick}
+          onPreviousClick={onPreviousClick}
+        />
+      </div>
     </div>
   );
 };

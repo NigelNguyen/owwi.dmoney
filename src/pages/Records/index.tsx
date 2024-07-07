@@ -14,13 +14,6 @@ import { TRecordFilter } from "./type";
 
 const Records = () => {
   const [filter, setFilter] = useState<TRecordFilter>({});
-  const { data: records, isFetching } = useGetRecords(filter);
-  const { data: categories } = useGetCategories();
-  const { data: types } = useGetTypes();
-  const { data: partners } = useGetPartners();
-  const [isOpenEditForm, setIsOpenEditForm] = useState(false);
-  const [editId, setEditId] = useState("");
-
   const tableConfig = useTable<BaseRecordDTO>({
     columnsConfig: [
       {
@@ -83,10 +76,23 @@ const Records = () => {
       setIsOpenEditForm(true);
     },
   });
+  const { data: records, isFetching } = useGetRecords({
+    ...filter,
+    page: tableConfig.page,
+    pageSize: 10,
+  });
+  const { data: categories } = useGetCategories();
+  const { data: types } = useGetTypes();
+  const { data: partners } = useGetPartners();
+  const [isOpenEditForm, setIsOpenEditForm] = useState(false);
+  const [editId, setEditId] = useState("");
 
   useEffect(() => {
     tableConfig.setData(records?.content.records || []);
-  }, [records, tableConfig]);
+    tableConfig.setTotalPage(records?.pagination.total ?? 0);
+    records?.pagination.page &&
+      tableConfig.setPage(records?.pagination.page ?? 1);
+  }, [records]);
 
   return (
     <>

@@ -30,6 +30,11 @@ export type GetRecordsDTO = {
   content: {
     records: Array<BaseRecordDTO>;
   };
+  pagination: {
+    total: number;
+    page: number;
+    pageSize: number;
+  };
 };
 
 export type GetRecordDTO = {
@@ -70,7 +75,7 @@ export const useUpdateRecord = () => {
 };
 
 export const useGetRecords = (
-  filter: TRecordFilter
+  filter: TRecordFilter & { page: number; pageSize: number }
 ): UseQueryResult<GetRecordsDTO, AxiosError> => {
   return useQuery({
     queryKey: [queryKey.list, filter],
